@@ -1,0 +1,235 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    comment: 'Transmisor FSK con USRP 2920 (recepcion con HackRF One)'
+    description: Transmisor FSK binario por USRP 2920
+    generate_options: qt_gui
+    id: Transmisor_FSK_USRP
+    output_language: python
+    run: 'True'
+    run_options: prompt
+    title: Transmisor FSK - USRP 2920
+    window_size: (1400,900)
+  states:
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: 'Misma tasa para el modulador y el USRP
+
+      (100 MHz / 100 = 1 MS/s, valida en el 2920)'
+    value: 1e6
+  states:
+    coordinate: [200, 12]
+    rotation: 0
+    state: enabled
+- name: sps
+  id: variable
+  parameters:
+    comment: Muestras por simbolo
+    value: '100'
+  states:
+    coordinate: [312, 12]
+    rotation: 0
+    state: enabled
+- name: symbol_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: samp_rate/sps
+  states:
+    coordinate: [400, 12]
+    rotation: 0
+    state: enabled
+- name: fc
+  id: variable
+  parameters:
+    comment: Frecuencia portadora
+    value: 870e6
+  states:
+    coordinate: [520, 12]
+    rotation: 0
+    state: enabled
+- name: fsk_deviation
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: "Desviaci\xF3n FSK (Hz)"
+    rangeType: float
+    start: '5000'
+    step: '1000'
+    stop: '100000'
+    value: '20000'
+    widget: counter_slider
+  states:
+    coordinate: [640, 12]
+    rotation: 0
+    state: enabled
+- name: tx_gain
+  id: variable_qtgui_range
+  parameters:
+    comment: 'Ganancia TX del 2920 (WBX): 0 a 31.5 dB'
+    gui_hint: ''
+    label: Ganancia TX (dB)
+    rangeType: float
+    start: '0'
+    step: '0.5'
+    stop: '31.5'
+    value: '10'
+    widget: counter_slider
+  states:
+    coordinate: [840, 12]
+    rotation: 0
+    state: enabled
+- name: tx_amp
+  id: variable_qtgui_range
+  parameters:
+    comment: Amplitud digital (<1 para no saturar el DAC)
+    gui_hint: ''
+    label: Amplitud
+    rangeType: float
+    start: '0'
+    step: '0.01'
+    stop: '1'
+    value: '0.7'
+    widget: counter_slider
+  states:
+    coordinate: [1024, 12]
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import math
+  states:
+    coordinate: [1208, 12]
+    rotation: 0
+    state: enabled
+- name: bit_source
+  id: blocks_vector_source_x
+  parameters:
+    comment: ''
+    repeat: 'True'
+    tags: '[]'
+    type: byte
+    vector: '[0,1,0,0,1,1,0,1,1,1,0,0,1,0,1,0]'
+    vlen: '1'
+  states:
+    coordinate: [24, 180]
+    rotation: 0
+    state: enabled
+- name: nrz_mapper
+  id: digital_chunks_to_symbols_xx
+  parameters:
+    comment: 'bit 0 -> -1 (fc - desviacion)
+
+      bit 1 -> +1 (fc + desviacion)'
+    dimension: '1'
+    in_type: byte
+    num_ports: '1'
+    out_type: float
+    symbol_table: '[-1.0, 1.0]'
+  states:
+    coordinate: [256, 196]
+    rotation: 0
+    state: enabled
+- name: symbol_repeat
+  id: blocks_repeat
+  parameters:
+    comment: ''
+    interp: sps
+    type: float
+    vlen: '1'
+  states:
+    coordinate: [480, 204]
+    rotation: 0
+    state: enabled
+- name: fsk_modulator
+  id: analog_frequency_modulator_fc
+  parameters:
+    comment: ''
+    sensitivity: 2*math.pi*fsk_deviation/samp_rate
+  states:
+    coordinate: [664, 204]
+    rotation: 0
+    state: enabled
+- name: amp_scale
+  id: blocks_multiply_const_vxx
+  parameters:
+    comment: ''
+    const: tx_amp
+    type: complex
+    vlen: '1'
+  states:
+    coordinate: [904, 204]
+    rotation: 0
+    state: enabled
+- name: uhd_usrp_sink_0
+  id: uhd_usrp_sink
+  parameters:
+    ant0: '"TX/RX"'
+    center_freq0: fc
+    clock_rate: 0e0
+    comment: 'USRP 2920: sin GPSDO -> Sync = none'
+    dev_addr: '""'
+    dev_args: ''
+    gain0: tx_gain
+    nchan: '1'
+    num_mboards: '1'
+    samp_rate: samp_rate
+    sync: none
+    type: fc32
+  states:
+    coordinate: [1136, 172]
+    rotation: 0
+    state: enabled
+- name: tx_spectrum
+  id: qtgui_freq_sink_x
+  parameters:
+    autoscale: 'False'
+    average: '0.2'
+    axislabels: 'True'
+    bw: samp_rate
+    comment: ''
+    ctrlpanel: 'False'
+    fc: fc
+    fftsize: '2048'
+    freqhalf: 'True'
+    grid: 'True'
+    gui_hint: ''
+    label1: Tx
+    legend: 'True'
+    name: '"Espectro FSK transmitido"'
+    nconnections: '1'
+    showports: 'False'
+    type: complex
+    units: dB
+    update_time: '0.10'
+    wintype: window.WIN_BLACKMAN_hARRIS
+    ymax: '10'
+    ymin: '-140'
+  states:
+    coordinate: [1136, 360]
+    rotation: 0
+    state: enabled
+
+connections:
+- [bit_source, '0', nrz_mapper, '0']
+- [nrz_mapper, '0', symbol_repeat, '0']
+- [symbol_repeat, '0', fsk_modulator, '0']
+- [fsk_modulator, '0', amp_scale, '0']
+- [amp_scale, '0', uhd_usrp_sink_0, '0']
+- [amp_scale, '0', tx_spectrum, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.12.0
