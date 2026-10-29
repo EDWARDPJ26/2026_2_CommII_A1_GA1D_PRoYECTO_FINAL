@@ -1,0 +1,628 @@
+options:
+  parameters: {author: '', catch_exceptions: 'True', category: '[GRC Hier Blocks]', cmake_opt: '', comment: 'Fase 2 - Guia 2: Tx conformado + canal AWGN + receptor disenado', copyright: '', description: 'Simulacion BFSK 10 kbps, df=20 kHz, canal AWGN y receptor con ojo, bits y BER', gen_cmake: 'On', gen_linking: dynamic, generate_options: qt_gui, hier_block_src_path: '.:', id: FSK_Tx_Canal_Rx_Sim, max_nouts: '0', output_language: python, placement: '(0,0)', qt_qss_theme: '', realtime_scheduling: '', run: 'True', run_command: '{python} -u {filename}', run_options: prompt, sizing_mode: fixed, thread_safe_setters: '', title: FSK Tx-Canal-Rx (Guia 2) - Telemetria industrial, window_size: '(1500,1100)'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+blocks:
+- name: samp_rate
+  id: variable
+  parameters: {comment: 'Tasa de muestreo: 100 MHz/100 en el USRP y 8 MS/s/8 en el HackRF', value: 1e6}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 12]
+    rotation: 0
+    state: enabled
+- name: sps
+  id: variable
+  parameters: {comment: Muestras por simbolo, value: '100'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [320, 12]
+    rotation: 0
+    state: enabled
+- name: symbol_rate
+  id: variable
+  parameters: {comment: Rs = 10 kbaud (telemetria industrial), value: samp_rate/sps}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 12]
+    rotation: 0
+    state: enabled
+- name: Rb
+  id: variable
+  parameters: {comment: 'BFSK binaria: Rb = Rs = 10 kbps', value: symbol_rate}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [520, 12]
+    rotation: 0
+    state: enabled
+- name: ber_window
+  id: variable
+  parameters: {comment: Bits promediados para la BER, value: '10000'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [620, 12]
+    rotation: 0
+    state: enabled
+- name: fsk_deviation
+  id: variable_qtgui_range
+  parameters: {affinity: '', alias: '', comment: 'bit 1 -> +df, bit 0 -> -df', label: "Desviaci\xF3n FSK \u0394f (Hz)", rangeType: float, value: '20000', start: '5000', stop: '100000', step: '1000', widget: counter_slider, orient: QtCore.Qt.Horizontal, min_len: '200', gui_hint: '0,0,1,1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [760, 12]
+    rotation: 0
+    state: enabled
+- name: noise_voltage
+  id: variable_qtgui_range
+  parameters: {affinity: '', alias: '', comment: Potencia de ruido = sigma^2 sobre samp_rate, label: "Ruido AWGN (noise_voltage \u03C3)", rangeType: float, value: '0', start: '0', stop: '5', step: '0.05', widget: counter_slider, orient: QtCore.Qt.Horizontal, min_len: '200', gui_hint: '0,1,1,1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [960, 12]
+    rotation: 0
+    state: enabled
+- name: sample_offset
+  id: variable_qtgui_range
+  parameters: {affinity: '', alias: '', comment: 16 = maxima apertura del ojo (retardo filtro+integrador = 216 muestras), label: "Instante de muestreo dentro del s\xEDmbolo (muestra)", rangeType: int, value: '16', start: '0', stop: '99', step: '1', widget: counter_slider, orient: QtCore.Qt.Horizontal, min_len: '200', gui_hint: '1,0,1,2'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1160, 12]
+    rotation: 0
+    state: enabled
+- name: bit_delay
+  id: variable
+  parameters: {comment: 'Retardo de la cadena Rx en bits (medido = 2), alinea Tx con Rx', value: '2'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1360, 12]
+    rotation: 0
+    state: enabled
+- name: h_fsk
+  id: variable_qtgui_label
+  parameters: {affinity: '', alias: '', comment: '', label: "\xCDndice de modulaci\xF3n h = 2\u0394f/Rs", type: real, value: 2*fsk_deviation/symbol_rate, formatter: None, gui_hint: '2,0,1,1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [760, 140]
+    rotation: 0
+    state: enabled
+- name: ebn0_db
+  id: variable_qtgui_label
+  parameters: {affinity: '', alias: '', comment: '', label: "Eb/N0 = 10log10(sps/\u03C3\xB2)", type: string, value: ('%.1f dB' % (10*math.log10(sps/noise_voltage**2))) if noise_voltage > 0 else 'sin ruido', formatter: None, gui_hint: '2,1,1,1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [960, 140]
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters: {alias: '', comment: '', imports: import math}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1160, 140]
+    rotation: 0
+    state: enabled
+- name: bit_source
+  id: analog_random_source_x
+  parameters: {affinity: '', alias: '', comment: Bits aleatorios (tramas de telemetria), type: byte, min: '0', max: '2', num_samps: '10000', repeat: 'True', maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [16, 300]
+    rotation: 0
+    state: enabled
+- name: nrz_mapper
+  id: digital_chunks_to_symbols_xx
+  parameters: {affinity: '', alias: '', comment: '', dimension: '1', in_type: byte, maxoutbuf: '0', minoutbuf: '0', num_ports: '1', out_type: float, symbol_table: '[-1.0, 1.0]'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 316]
+    rotation: 0
+    state: enabled
+- name: symbol_repeat
+  id: blocks_repeat
+  parameters: {affinity: '', alias: '', comment: '', interp: sps, maxoutbuf: '0', minoutbuf: '0', type: float, vlen: '1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [416, 316]
+    rotation: 0
+    state: enabled
+- name: fsk_modulator
+  id: analog_frequency_modulator_fc
+  parameters: {affinity: '', alias: '', comment: '', maxoutbuf: '0', minoutbuf: '0', sensitivity: 2*math.pi*fsk_deviation/samp_rate}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [576, 316]
+    rotation: 0
+    state: enabled
+- name: throttle
+  id: blocks_throttle2
+  parameters: {affinity: '', alias: '', comment: Solo en simulacion (sin hardware), ignoretag: 'True', limit: auto, maximum: '0.1', maxoutbuf: '0', minoutbuf: '0', samples_per_second: samp_rate, type: complex, vlen: '1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [776, 316]
+    rotation: 0
+    state: enabled
+- name: channel_awgn
+  id: channels_channel_model
+  parameters: {affinity: '', alias: '', block_tags: 'True', comment: 'Canal AWGN: ruido de banda ancha de motores/variadores + termico', epsilon: '1.0', freq_offset: '0.0', maxoutbuf: '0', minoutbuf: '0', noise_voltage: noise_voltage, seed: '0', taps: 1.0 + 0.0j}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [976, 300]
+    rotation: 0
+    state: enabled
+- name: rx_filter
+  id: low_pass_filter
+  parameters: {affinity: '', alias: '', comment: 'Filtro de canal pre-discriminador (~Carson): evita el umbral del discriminador', type: fir_filter_ccf, decim: '1', interp: '1', gain: '1', samp_rate: samp_rate, cutoff_freq: fsk_deviation + 1.5*symbol_rate, width: 10e3, win: window.WIN_HAMMING, beta: '6.76', maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1216, 284]
+    rotation: 0
+    state: enabled
+- name: fsk_demod_rx
+  id: analog_quadrature_demod_cf
+  parameters: {affinity: '', alias: '', comment: 'Discriminador: +1 / -1', gain: samp_rate/(2*math.pi*fsk_deviation), maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1456, 316]
+    rotation: 0
+    state: enabled
+- name: integrador
+  id: blocks_moving_average_xx
+  parameters: {affinity: '', alias: '', comment: Integrador de 1 simbolo (filtro acoplado a pulso NRZ), type: float, length: sps, scale: 1.0/sps, max_iter: '4000', vlen: '1', maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1656, 300]
+    rotation: 0
+    state: enabled
+- name: eye_align
+  id: blocks_delay
+  parameters: {affinity: '', alias: '', comment: 'Solo visual: centra en el ojo el instante elegido', delay: (sps - sample_offset) % sps, maxoutbuf: '0', minoutbuf: '0', num_ports: '1', showports: 'False', type: float, vlen: '1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1856, 172]
+    rotation: 0
+    state: enabled
+- name: symbol_sampler
+  id: blocks_keep_m_in_n
+  parameters: {affinity: '', alias: '', comment: Toma 1 muestra por simbolo en sample_offset, type: float, m: '1', n: sps, offset: sample_offset, maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1856, 308]
+    rotation: 0
+    state: enabled
+- name: slicer
+  id: digital_binary_slicer_fb
+  parameters: {affinity: '', alias: '', comment: Umbral de decision = 0, maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2176, 324]
+    rotation: 0
+    state: enabled
+- name: fsk_demod_tx
+  id: analog_quadrature_demod_cf
+  parameters: {affinity: '', alias: '', comment: Referencia ideal (sin canal), gain: samp_rate/(2*math.pi*fsk_deviation), maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1216, 172]
+    rotation: 0
+    state: enabled
+- name: tx_ref_delay
+  id: blocks_delay
+  parameters: {affinity: '', alias: '', comment: '', delay: bit_delay, maxoutbuf: '0', minoutbuf: '0', num_ports: '1', showports: 'False', type: byte, vlen: '1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [216, 520]
+    rotation: 0
+    state: enabled
+- name: bit_xor
+  id: blocks_xor_xx
+  parameters: {affinity: '', alias: '', comment: 1 = error de bit, type: byte, num_inputs: '2', maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2176, 520]
+    rotation: 0
+    state: enabled
+- name: err_to_float
+  id: blocks_char_to_float
+  parameters: {affinity: '', alias: '', comment: '', maxoutbuf: '0', minoutbuf: '0', scale: '1', vlen: '1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2336, 524]
+    rotation: 0
+    state: enabled
+- name: ber_avg
+  id: blocks_moving_average_xx
+  parameters: {affinity: '', alias: '', comment: '', type: float, length: ber_window, scale: 1.0/ber_window, max_iter: '4000', vlen: '1', maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2496, 508]
+    rotation: 0
+    state: enabled
+- name: tx_to_float
+  id: blocks_char_to_float
+  parameters: {affinity: '', alias: '', comment: '', maxoutbuf: '0', minoutbuf: '0', scale: '1', vlen: '1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [416, 600]
+    rotation: 0
+    state: enabled
+- name: rx_to_float
+  id: blocks_char_to_float
+  parameters: {affinity: '', alias: '', comment: '', maxoutbuf: '0', minoutbuf: '0', scale: '1', vlen: '1'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2336, 404]
+    rotation: 0
+    state: enabled
+- name: psd
+  id: qtgui_freq_sink_x
+  parameters: {affinity: '', alias: '', alpha1: '1.0', alpha10: '1.0', alpha2: '1.0', alpha3: '1.0', alpha4: '1.0', alpha5: '1.0', alpha6: '1.0', alpha7: '1.0', alpha8: '1.0', alpha9: '1.0', autoscale: 'False', average: '1.0', axislabels: 'True', bw: samp_rate, color1: '"blue"', color10: '"dark blue"', color2: '"red"', color3: '"green"', color4: '"black"', color5: '"cyan"', color6: '"magenta"', color7: '"yellow"', color8: '"dark red"', color9: '"dark green"', comment: '', ctrlpanel: 'False', fc: '0', fftsize: '2048', freqhalf: 'True', grid: 'True', gui_hint: '4,0,1,1', label: Relative Gain, label1: Tx, label10: '', label2: Canal (AWGN), label3: Rx tras filtro de canal, label4: '', label5: '', label6: '', label7: '', label8: '', label9: '', legend: 'True', maxoutbuf: '0', minoutbuf: '0', name: '"PSD: salida Tx / salida canal / Rx filtrada"', nconnections: '3', norm_window: 'False', showports: 'False', tr_chan: '0', tr_level: '0.0', tr_mode: qtgui.TRIG_MODE_FREE, tr_tag: '""', type: complex,
+    units: dB, update_time: '0.10', width1: '1', width10: '1', width2: '1', width3: '1', width4: '1', width5: '1', width6: '1', width7: '1', width8: '1', width9: '1', wintype: window.WIN_BLACKMAN_hARRIS, ymax: '10', ymin: '-120'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2496, 40]
+    rotation: 0
+    state: enabled
+- name: envolvente
+  id: qtgui_time_sink_x
+  parameters: {affinity: '', alias: '', alpha1: '1.0', alpha10: '1.0', alpha2: '1.0', alpha3: '1.0', alpha4: '1.0', alpha5: '1.0', alpha6: '1.0', alpha7: '1.0', alpha8: '1.0', alpha9: '1.0', autoscale: 'False', axislabels: 'True', color1: blue, color10: dark blue, color2: red, color3: green, color4: black, color5: cyan, color6: magenta, color7: yellow, color8: dark red, color9: dark green, comment: '', ctrlpanel: 'False', entags: 'True', grid: 'True', gui_hint: '4,1,1,1', label1: Tx, label10: '', label2: Canal, label3: '', label4: '', label5: '', label6: '', label7: '', label8: '', label9: '', legend: 'True', marker1: '-1', marker10: '-1', marker2: '-1', marker3: '-1', marker4: '-1', marker5: '-1', marker6: '-1', marker7: '-1', marker8: '-1', marker9: '-1', name: '"Envolvente compleja: Tx vs salida del canal"', nconnections: '2', size: '2000', srate: samp_rate, stemplot: 'False', style1: '1', style10: '1', style2: '1', style3: '1', style4: '1', style5: '1', style6: '1', style7: '1', style8: '1',
+    style9: '1', tr_chan: '0', tr_delay: '0', tr_level: '0.0', tr_mode: qtgui.TRIG_MODE_FREE, tr_slope: qtgui.TRIG_SLOPE_POS, tr_tag: '""', type: complex, update_time: '0.10', width1: '1', width10: '1', width2: '1', width3: '1', width4: '1', width5: '1', width6: '1', width7: '1', width8: '1', width9: '1', ylabel: Amplitude, ymax: '2', ymin: '-2', yunit: '""'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2496, 160]
+    rotation: 0
+    state: enabled
+- name: freq_inst
+  id: qtgui_time_sink_x
+  parameters: {affinity: '', alias: '', alpha1: '1.0', alpha10: '1.0', alpha2: '1.0', alpha3: '1.0', alpha4: '1.0', alpha5: '1.0', alpha6: '1.0', alpha7: '1.0', alpha8: '1.0', alpha9: '1.0', autoscale: 'False', axislabels: 'True', color1: blue, color10: dark blue, color2: red, color3: green, color4: black, color5: cyan, color6: magenta, color7: yellow, color8: dark red, color9: dark green, comment: '', ctrlpanel: 'False', entags: 'True', grid: 'True', gui_hint: '5,0,1,1', label1: Ideal, label10: '', label2: Canal, label3: "Integrada (1 s\xEDmbolo)", label4: '', label5: '', label6: '', label7: '', label8: '', label9: '', legend: 'True', marker1: '-1', marker10: '-1', marker2: '-1', marker3: '-1', marker4: '-1', marker5: '-1', marker6: '-1', marker7: '-1', marker8: '-1', marker9: '-1', name: "\"Frecuencia instant\xE1nea: ideal vs canal\"", nconnections: '3', size: '2000', srate: samp_rate, stemplot: 'False', style1: '1', style10: '1', style2: '1', style3: '1', style4: '1', style5: '1', style6: '1',
+    style7: '1', style8: '1', style9: '1', tr_chan: '0', tr_delay: '0', tr_level: '0.0', tr_mode: qtgui.TRIG_MODE_FREE, tr_slope: qtgui.TRIG_SLOPE_POS, tr_tag: '""', type: float, update_time: '0.10', width1: '1', width10: '1', width2: '1', width3: '1', width4: '1', width5: '1', width6: '1', width7: '1', width8: '1', width9: '1', ylabel: Amplitude, ymax: '3', ymin: '-3', yunit: '""'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2496, 260]
+    rotation: 0
+    state: enabled
+- name: eye
+  id: qtgui_eye_sink_x
+  parameters: {affinity: '', alias: '', comment: Centro de la traza = instante de muestreo, type: float, ylabel: Amplitud, yunit: '""', size: '2000', samp_per_symbol: sps, srate: samp_rate, grid: 'False', autoscale: 'False', ymin: '-1.5', ymax: '1.5', nconnections: '1', update_time: '0.10', entags: 'True', gui_hint: '5,1,1,1', tr_mode: qtgui.TRIG_MODE_FREE, tr_slope: qtgui.TRIG_SLOPE_POS, tr_level: '0.0', tr_delay: '0', tr_chan: '0', tr_tag: '""', ctrlpanel: 'False', legend: 'True', axislabels: 'True', label1: Salida integrador, width1: '1', color1: blue, style1: '1', marker1: '-1', alpha1: '1.0', label2: Signal 2, width2: '1', color2: blue, style2: '1', marker2: '-1', alpha2: '1.0', label3: Signal 3, width3: '1', color3: blue, style3: '1', marker3: '-1', alpha3: '1.0', label4: Signal 4, width4: '1', color4: blue, style4: '1', marker4: '-1', alpha4: '1.0', label5: Signal 5, width5: '1', color5: blue, style5: '1', marker5: '-1', alpha5: '1.0', label6: Signal 6, width6: '1', color6: blue,
+    style6: '1', marker6: '-1', alpha6: '1.0', label7: Signal 7, width7: '1', color7: blue, style7: '1', marker7: '-1', alpha7: '1.0', label8: Signal 8, width8: '1', color8: blue, style8: '1', marker8: '-1', alpha8: '1.0', label9: Signal 9, width9: '1', color9: blue, style9: '1', marker9: '-1', alpha9: '1.0', label10: Signal 10, width10: '1', color10: blue, style10: '1', marker10: '-1', alpha10: '1.0', maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2016, 172]
+    rotation: 0
+    state: enabled
+- name: bits_cmp
+  id: qtgui_time_sink_x
+  parameters: {affinity: '', alias: '', alpha1: '1.0', alpha10: '1.0', alpha2: '1.0', alpha3: '1.0', alpha4: '1.0', alpha5: '1.0', alpha6: '1.0', alpha7: '1.0', alpha8: '1.0', alpha9: '1.0', autoscale: 'False', axislabels: 'True', color1: blue, color10: dark blue, color2: red, color3: green, color4: black, color5: cyan, color6: magenta, color7: yellow, color8: dark red, color9: dark green, comment: '', ctrlpanel: 'False', entags: 'True', grid: 'True', gui_hint: '6,0,1,2', label1: Tx, label10: '', label2: Rx, label3: '', label4: '', label5: '', label6: '', label7: '', label8: '', label9: '', legend: 'True', marker1: '-1', marker10: '-1', marker2: '0', marker3: '-1', marker4: '-1', marker5: '-1', marker6: '-1', marker7: '-1', marker8: '-1', marker9: '-1', name: '"Bits Tx (alineados) vs Bits Rx"', nconnections: '2', size: '64', srate: symbol_rate, stemplot: 'False', style1: '1', style10: '1', style2: '0', style3: '1', style4: '1', style5: '1', style6: '1', style7: '1', style8: '1', style9: '1',
+    tr_chan: '0', tr_delay: '0', tr_level: '0.0', tr_mode: qtgui.TRIG_MODE_FREE, tr_slope: qtgui.TRIG_SLOPE_POS, tr_tag: '""', type: float, update_time: '0.10', width1: '1', width10: '1', width2: '1', width3: '1', width4: '1', width5: '1', width6: '1', width7: '1', width8: '1', width9: '1', ylabel: Amplitude, ymax: '1.2', ymin: '-0.2', yunit: '""'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2496, 380]
+    rotation: 0
+    state: enabled
+- name: ber
+  id: qtgui_number_sink
+  parameters: {affinity: '', alias: '', comment: '', name: '"BER (ventana de ber_window bits)"', type: float, autoscale: 'False', avg: '0', graph_type: qtgui.NUM_GRAPH_HORIZ, nconnections: '1', min: '0', max: '0.5', update_time: '0.10', gui_hint: '3,0,1,2', label1: BER, unit1: '', color1: '', factor1: '1', label2: '', unit2: '', color2: '', factor2: '1', label3: '', unit3: '', color3: '', factor3: '1', label4: '', unit4: '', color4: '', factor4: '1', label5: '', unit5: '', color5: '', factor5: '1', label6: '', unit6: '', color6: '', factor6: '1', label7: '', unit7: '', color7: '', factor7: '1', label8: '', unit8: '', color8: '', factor8: '1', label9: '', unit9: '', color9: '', factor9: '1', label10: '', unit10: '', color10: '', factor10: '1', maxoutbuf: '0', minoutbuf: '0'}
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2656, 508]
+    rotation: 0
+    state: enabled
+- name: iq_const
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'True'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: 'Envolvente constante: circulo; el ruido engrosa el anillo'
+    grid: 'True'
+    gui_hint: 7,0,1,1
+    label1: I-Q
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    marker1: '0'
+    marker10: '0'
+    marker2: '0'
+    marker3: '0'
+    marker4: '0'
+    marker5: '0'
+    marker6: '0'
+    marker7: '0'
+    marker8: '0'
+    marker9: '0'
+    name: "\"Plano I-Q de la se\xF1al filtrada (FSK = c\xEDrculo)\""
+    nconnections: '1'
+    size: '1024'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '2'
+    ymin: '-2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 2656
+    - 640
+    rotation: 0
+    state: enabled
+- name: soft_to_complex
+  id: blocks_float_to_complex
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Muestra de decision -> eje I
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 2656
+    - 760
+    rotation: 0
+    state: enabled
+- name: decision_const
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: Dos nubes en -1 (bit 0) y +1 (bit 1); umbral en 0
+    grid: 'True'
+    gui_hint: 7,1,1,1
+    label1: Simbolos
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    marker1: '0'
+    marker10: '0'
+    marker2: '0'
+    marker3: '0'
+    marker4: '0'
+    marker5: '0'
+    marker6: '0'
+    marker7: '0'
+    marker8: '0'
+    marker9: '0'
+    name: "\"Constelaci\xF3n de decisi\xF3n (muestra por s\xEDmbolo)\""
+    nconnections: '1'
+    size: '512'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '1'
+    ymin: '-1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate:
+    - 2856
+    - 760
+    rotation: 0
+    state: enabled
+
+connections:
+- [rx_filter, '0', iq_const, '0']
+- [symbol_sampler, '0', soft_to_complex, '0']
+- [soft_to_complex, '0', decision_const, '0']
+- [bit_source, '0', nrz_mapper, '0']
+- [nrz_mapper, '0', symbol_repeat, '0']
+- [symbol_repeat, '0', fsk_modulator, '0']
+- [fsk_modulator, '0', throttle, '0']
+- [throttle, '0', channel_awgn, '0']
+- [channel_awgn, '0', rx_filter, '0']
+- [rx_filter, '0', fsk_demod_rx, '0']
+- [fsk_demod_rx, '0', integrador, '0']
+- [integrador, '0', symbol_sampler, '0']
+- [integrador, '0', eye_align, '0']
+- [symbol_sampler, '0', slicer, '0']
+- [throttle, '0', fsk_demod_tx, '0']
+- [bit_source, '0', tx_ref_delay, '0']
+- [tx_ref_delay, '0', bit_xor, '0']
+- [slicer, '0', bit_xor, '1']
+- [bit_xor, '0', err_to_float, '0']
+- [err_to_float, '0', ber_avg, '0']
+- [ber_avg, '0', ber, '0']
+- [tx_ref_delay, '0', tx_to_float, '0']
+- [slicer, '0', rx_to_float, '0']
+- [tx_to_float, '0', bits_cmp, '0']
+- [rx_to_float, '0', bits_cmp, '1']
+- [throttle, '0', psd, '0']
+- [channel_awgn, '0', psd, '1']
+- [rx_filter, '0', psd, '2']
+- [throttle, '0', envolvente, '0']
+- [channel_awgn, '0', envolvente, '1']
+- [fsk_demod_tx, '0', freq_inst, '0']
+- [fsk_demod_rx, '0', freq_inst, '1']
+- [integrador, '0', freq_inst, '2']
+- [eye_align, '0', eye, '0']
+metadata: {file_format: 1, grc_version: 3.10.12.0}
