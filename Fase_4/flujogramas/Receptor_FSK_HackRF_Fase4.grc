@@ -1,0 +1,2327 @@
+blocks:
+-   id: variable
+    name: EbN0_max
+    parameters:
+        comment: Subido de 14 a 18 dB para cruzar BER = 1e-3 con margen
+        value: '18'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1512
+        - 12
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: EbN0_min
+    parameters:
+        comment: ''
+        value: '0'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1400
+        - 12
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: EbN0_step
+    parameters:
+        comment: ''
+        value: '1.0'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1624
+        - 12
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: N_EbN0
+    parameters:
+        comment: ''
+        value: int(round((EbN0_max-EbN0_min)/EbN0_step))+1
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1736
+        - 12
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: Rb
+    parameters:
+        comment: 'BFSK: Rb = Rs = 10 kbps'
+        value: symbol_rate
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1848
+        - 12
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: bb_rate
+    parameters:
+        comment: Tasa I/Q a la entrada del Rx digital (1 MS/s)
+        value: samp_rate
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1256
+        - 84.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: bits_guardia
+    parameters:
+        comment: ''
+        value: '1000'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2400
+        - 4.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: bits_por_punto
+    parameters:
+        comment: ''
+        value: '100000'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1376
+        - 92.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: decim
+    parameters:
+        comment: ''
+        value: '8'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 488
+        - 12.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: delay_bits
+    parameters:
+        comment: 'Queda en 0: e_Ref_Alineada entrega la referencia ya alineada'
+        value: '0'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2288
+        - 4.0
+        rotation: 0
+        state: enabled
+-   id: variable_function_probe
+    name: estado_probe
+    parameters:
+        block_id: e_Texto_Rx
+        comment: ''
+        function_args: ''
+        function_name: estado
+        poll_rate: '4'
+        value: '""'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2520
+        - 116.0
+        rotation: 0
+        state: enabled
+-   id: variable_qtgui_label
+    name: estado_rx
+    parameters:
+        comment: ''
+        formatter: None
+        gui_hint: ''
+        label: Verificacion
+        type: string
+        value: estado_probe
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2240
+        - 116.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: fc
+    parameters:
+        comment: Debe ser igual a la del transmisor
+        value: 870e6
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 256
+        - 12.0
+        rotation: 0
+        state: enabled
+-   id: variable_qtgui_range
+    name: freq_corr
+    parameters:
+        comment: 'Corrige el error de cristal entre
+
+            USRP y HackRF (puede ser de varios kHz)'
+        gui_hint: ''
+        label: "Correcci\xF3n de frecuencia (Hz)"
+        min_len: '200'
+        orient: QtCore.Qt.Horizontal
+        rangeType: float
+        start: '-40000'
+        step: '100'
+        stop: '40000'
+        value: '-6500'
+        widget: counter_slider
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 232
+        - 144.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: fsk_deviation
+    parameters:
+        comment: Igual al transmisor
+        value: 20e3
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 920
+        - 12.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: hackrf_rate
+    parameters:
+        comment: Tasa del HackRF (minimo 2 MS/s)
+        value: 8e6
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 360
+        - 12.0
+        rotation: 0
+        state: enabled
+-   id: variable_qtgui_range
+    name: lna_gain
+    parameters:
+        comment: ''
+        gui_hint: ''
+        label: Ganancia LNA (dB)
+        min_len: '200'
+        orient: QtCore.Qt.Horizontal
+        rangeType: float
+        start: '0'
+        step: '8'
+        stop: '40'
+        value: '16'
+        widget: counter_slider
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 440
+        - 144.0
+        rotation: 0
+        state: enabled
+-   id: variable_qtgui_range
+    name: lo_offset
+    parameters:
+        comment: 'El HackRF se sintoniza lo_offset abajo de fc.
+
+            Deslizar para alejar su pico de DC de la senal'
+        gui_hint: ''
+        label: Desplazamiento del pico DC del HackRF (Hz)
+        min_len: '200'
+        orient: QtCore.Qt.Horizontal
+        rangeType: float
+        start: '0'
+        step: '10000'
+        stop: '2000000'
+        value: '200000'
+        widget: counter_slider
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1048
+        - 8.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: mensaje
+    parameters:
+        comment: 'Lecturas simuladas FIJAS: el receptor debe conocer el mismo texto'
+        value: '"ID:S01;T:24.5C;HR:15%;ALT:2500msnm;P:184kPa;NIV:72%;Q:3.4m3/h"'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1520
+        - 124.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: pn9
+    parameters:
+        comment: '0 = carga ASCII sin blanqueo
+
+            1 = carga blanqueada con PN9
+
+            Debe valer lo mismo en el Tx y en el Rx'
+        value: '0'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2040
+        - 100.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: samp_rate
+    parameters:
+        comment: Igual a la del transmisor (1 MS/s)
+        value: hackrf_rate/decim
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 576
+        - 12.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: sps
+    parameters:
+        comment: Igual al transmisor
+        value: '100'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 712
+        - 12.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: symbol_rate
+    parameters:
+        comment: ''
+        value: samp_rate/sps
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 800
+        - 12.0
+        rotation: 0
+        state: enabled
+-   id: variable_function_probe
+    name: texto_probe
+    parameters:
+        block_id: e_Texto_Rx
+        comment: ''
+        function_args: ''
+        function_name: texto
+        poll_rate: '4'
+        value: '""'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2688
+        - 116.0
+        rotation: 0
+        state: enabled
+-   id: variable_qtgui_label
+    name: texto_rx
+    parameters:
+        comment: ''
+        formatter: None
+        gui_hint: ''
+        label: Texto recibido
+        type: string
+        value: texto_probe
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2376
+        - 116.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: trama_bits
+    parameters:
+        comment: Preambulo 0x55555555 + SFD 0x904E + carga
+        value: trama_telemetria.construir_trama(mensaje, pn9)
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1960
+        - 4.0
+        rotation: 0
+        state: enabled
+-   id: variable
+    name: update_every
+    parameters:
+        comment: ''
+        value: '1000'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2160
+        - 4.0
+        rotation: 0
+        state: enabled
+-   id: variable_qtgui_range
+    name: vga_gain
+    parameters:
+        comment: ''
+        gui_hint: ''
+        label: Ganancia VGA (dB)
+        min_len: '200'
+        orient: QtCore.Qt.Horizontal
+        rangeType: float
+        start: '0'
+        step: '2'
+        stop: '62'
+        value: '20'
+        widget: counter_slider
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 616
+        - 144.0
+        rotation: 0
+        state: enabled
+-   id: qtgui_time_sink_x
+    name: bits_rx
+    parameters:
+        affinity: ''
+        alias: ''
+        alpha1: '1.0'
+        alpha10: '1.0'
+        alpha2: '1.0'
+        alpha3: '1.0'
+        alpha4: '1.0'
+        alpha5: '1.0'
+        alpha6: '1.0'
+        alpha7: '1.0'
+        alpha8: '1.0'
+        alpha9: '1.0'
+        autoscale: 'False'
+        axislabels: 'True'
+        color1: blue
+        color10: dark blue
+        color2: red
+        color3: green
+        color4: black
+        color5: cyan
+        color6: magenta
+        color7: yellow
+        color8: dark red
+        color9: dark green
+        comment: Bits de la trama de telemetria
+        ctrlpanel: 'False'
+        entags: 'True'
+        grid: 'True'
+        gui_hint: ''
+        label1: Bits recuperados
+        label10: Signal 10
+        label2: Signal 2
+        label3: Signal 3
+        label4: Signal 4
+        label5: Signal 5
+        label6: Signal 6
+        label7: Signal 7
+        label8: Signal 8
+        label9: Signal 9
+        legend: 'True'
+        marker1: '0'
+        marker10: '-1'
+        marker2: '-1'
+        marker3: '-1'
+        marker4: '-1'
+        marker5: '-1'
+        marker6: '-1'
+        marker7: '-1'
+        marker8: '-1'
+        marker9: '-1'
+        name: '"Bits recuperados"'
+        nconnections: '1'
+        size: '32'
+        srate: symbol_rate
+        stemplot: 'True'
+        style1: '1'
+        style10: '1'
+        style2: '1'
+        style3: '1'
+        style4: '1'
+        style5: '1'
+        style6: '1'
+        style7: '1'
+        style8: '1'
+        style9: '1'
+        tr_chan: '0'
+        tr_delay: '0'
+        tr_level: '0.0'
+        tr_mode: qtgui.TRIG_MODE_FREE
+        tr_slope: qtgui.TRIG_SLOPE_POS
+        tr_tag: '""'
+        type: float
+        update_time: '0.10'
+        width1: '1'
+        width10: '1'
+        width2: '1'
+        width3: '1'
+        width4: '1'
+        width5: '1'
+        width6: '1'
+        width7: '1'
+        width8: '1'
+        width9: '1'
+        ylabel: Bit
+        ymax: '1.2'
+        ymin: '-0.2'
+        yunit: '""'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2936
+        - 300.0
+        rotation: 0
+        state: enabled
+-   id: blocks_char_to_float
+    name: bits_to_float
+    parameters:
+        affinity: ''
+        alias: ''
+        comment: ''
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        scale: '1'
+        vlen: '1'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2744
+        - 320.0
+        rotation: 0
+        state: enabled
+-   id: low_pass_filter
+    name: channel_filter
+    parameters:
+        affinity: ''
+        alias: ''
+        beta: '6.76'
+        comment: 'Filtro de canal (parte del Rx digital), ajustado en la Fase 4:
+
+            35 kHz / 10 kHz (antes 60/40): menos ruido al discriminador'
+        cutoff_freq: 35e3
+        decim: '1'
+        gain: '1.0'
+        interp: '1'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        samp_rate: samp_rate
+        type: fir_filter_ccf
+        width: 10e3
+        win: window.WIN_HAMMING
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1048
+        - 380.0
+        rotation: 0
+        state: enabled
+-   id: qtgui_freq_sink_x
+    name: channel_spectrum
+    parameters:
+        affinity: ''
+        alias: ''
+        alpha1: '1.0'
+        alpha10: '1.0'
+        alpha2: '1.0'
+        alpha3: '1.0'
+        alpha4: '1.0'
+        alpha5: '1.0'
+        alpha6: '1.0'
+        alpha7: '1.0'
+        alpha8: '1.0'
+        alpha9: '1.0'
+        autoscale: 'False'
+        average: '0.2'
+        axislabels: 'True'
+        bw: samp_rate
+        color1: '"blue"'
+        color10: '"dark blue"'
+        color2: '"red"'
+        color3: '"green"'
+        color4: '"black"'
+        color5: '"cyan"'
+        color6: '"magenta"'
+        color7: '"yellow"'
+        color8: '"dark red"'
+        color9: '"dark green"'
+        comment: ''
+        ctrlpanel: 'False'
+        fc: fc
+        fftsize: '2048'
+        freqhalf: 'True'
+        grid: 'True'
+        gui_hint: ''
+        label: Relative Gain
+        label1: Canal
+        label10: ''''''
+        label2: ''''''
+        label3: ''''''
+        label4: ''''''
+        label5: ''''''
+        label6: ''''''
+        label7: ''''''
+        label8: ''''''
+        label9: ''''''
+        legend: 'True'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        name: '"Canal FSK centrado (debe verse simetrico en fc)"'
+        nconnections: '1'
+        norm_window: 'False'
+        showports: 'False'
+        tr_chan: '0'
+        tr_level: '0.0'
+        tr_mode: qtgui.TRIG_MODE_FREE
+        tr_tag: '""'
+        type: complex
+        units: dB
+        update_time: '0.10'
+        width1: '1'
+        width10: '1'
+        width2: '1'
+        width3: '1'
+        width4: '1'
+        width5: '1'
+        width6: '1'
+        width7: '1'
+        width8: '1'
+        width9: '1'
+        wintype: window.WIN_BLACKMAN_hARRIS
+        ymax: '0'
+        ymin: '-120'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1376
+        - 516.0
+        rotation: 0
+        state: enabled
+-   id: qtgui_vector_sink_f
+    name: curva_ber
+    parameters:
+        affinity: ''
+        alias: ''
+        alpha1: '1.0'
+        alpha10: '1.0'
+        alpha2: '1.0'
+        alpha3: '1.0'
+        alpha4: '1.0'
+        alpha5: '1.0'
+        alpha6: '1.0'
+        alpha7: '1.0'
+        alpha8: '1.0'
+        alpha9: '1.0'
+        autoscale: 'False'
+        average: '1.0'
+        color1: '"blue"'
+        color10: '"dark blue"'
+        color2: '"red"'
+        color3: '"green"'
+        color4: '"black"'
+        color5: '"cyan"'
+        color6: '"magenta"'
+        color7: '"yellow"'
+        color8: '"dark red"'
+        color9: '"dark green"'
+        comment: ''
+        grid: 'True'
+        gui_hint: ''
+        label1: '"BER"'
+        label10: ''
+        label2: ''
+        label3: ''
+        label4: ''
+        label5: ''
+        label6: ''
+        label7: ''
+        label8: ''
+        label9: ''
+        legend: 'True'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        name: '"Curva BER experimental vs Eb/N0"'
+        nconnections: '1'
+        ref_level: '0'
+        showports: 'False'
+        update_time: '0.2'
+        vlen: N_EbN0
+        width1: '3'
+        width10: '1'
+        width2: '1'
+        width3: '1'
+        width4: '1'
+        width5: '1'
+        width6: '1'
+        width7: '1'
+        width8: '1'
+        width9: '1'
+        x_axis_label: '"Eb/N0 [dB]"'
+        x_start: EbN0_min
+        x_step: EbN0_step
+        x_units: '"dB"'
+        y_axis_label: '"log10(BER)"'
+        y_units: '""'
+        ymax: '0'
+        ymin: '-7'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 3304
+        - 424.0
+        rotation: 0
+        state: enabled
+-   id: blocks_moving_average_xx
+    name: data_filter
+    parameters:
+        affinity: ''
+        alias: ''
+        comment: Integrador (filtro acoplado NRZ), como en la Fase 2
+        length: sps
+        max_iter: '4000'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        scale: 1.0/sps
+        type: float
+        vlen: '1'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1792
+        - 352.0
+        rotation: 0
+        state: enabled
+-   id: dc_blocker_xx
+    name: dc_blocker
+    parameters:
+        affinity: ''
+        alias: ''
+        comment: Quita el desplazamiento residual de frecuencia
+        length: '3200'
+        long_form: 'True'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        type: ff
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1592
+        - 388.0
+        rotation: 0
+        state: enabled
+-   id: epy_block
+    name: e_BER_CSV
+    parameters:
+        EbN0_max: EbN0_max
+        EbN0_min: EbN0_min
+        EbN0_step: EbN0_step
+        _source_code: "import numpy as np\nfrom gnuradio import gr\nfrom pathlib import\
+            \ Path\nimport csv\nimport time\n\n\nclass blk(gr.sync_block):\n\n   \
+            \ def __init__(self,\n                 EbN0_min=0.0,\n               \
+            \  EbN0_max=18.0,  # Ajuste Fase 4: GRC dimensiona los puertos con este\
+            \ valor (debe ser = EbN0_max)\n                 EbN0_step=1.0,\n     \
+            \            nombre_archivo=\"curva_BER.csv\",\n                 guardar_cada=2.0):\n\
+            \n        self.EbN0_min = float(EbN0_min)\n        self.EbN0_max = float(EbN0_max)\n\
+            \        self.EbN0_step = float(EbN0_step)\n\n        self.N = int(round(\n\
+            \            (self.EbN0_max - self.EbN0_min) /\n            self.EbN0_step\n\
+            \        )) + 1\n\n        gr.sync_block.__init__(\n            self,\n\
+            \            name='Guardar curva BER en CSV',\n            in_sig=[\n\
+            \                (np.float32, self.N),\n                (np.float32, self.N)\n\
+            \            ],\n            out_sig=None\n        )\n\n        self.nombre_archivo\
+            \ = str(nombre_archivo)\n        self.guardar_cada = float(guardar_cada)\n\
+            \n        # El Embedded Python Block se genera junto al flowgraph de GNU\
+            \ Radio.\n        # Por ello el CSV queda en la misma carpeta contenedora\
+            \ del .grc/.py.\n        # Ajuste Fase 4: compatibilidad GNU Radio 3.10\n\
+            \        self.carpeta = Path(__file__).resolve().parent if '__file__'\
+            \ in globals() else Path.cwd()\n        self.ruta_csv = self.carpeta /\
+            \ self.nombre_archivo\n\n        self.ultimo_guardado = 0.0\n        self.ebn0\
+            \ = self.EbN0_min + self.EbN0_step * np.arange(self.N)\n\n        print(\"\
+            CSV BER se guardar\xE1 en:\")\n        print(self.ruta_csv)\n\n    def\
+            \ guardar(self, ber, logber):\n        archivo_temporal = self.ruta_csv.with_suffix(\"\
+            .tmp\")\n\n        with open(archivo_temporal, \"w\", newline=\"\", encoding=\"\
+            utf-8\") as f:\n            writer = csv.writer(f)\n            writer.writerow([\"\
+            EbN0_dB\", \"BER\", \"log10_BER\"])\n\n            for eb, b, lb in zip(self.ebn0,\
+            \ ber, logber):\n                writer.writerow([\n                 \
+            \   f\"{eb:.6f}\",\n                    f\"{float(b):.12e}\",\n      \
+            \              f\"{float(lb):.12e}\"\n                ])\n\n        #\
+            \ Ajuste Fase 4: si otro programa tiene el CSV abierto (visor, Excel),\n\
+            \        # Windows impide reemplazarlo. Antes eso detenia el bloque y\
+            \ atascaba\n        # el flujograma; ahora se reintenta en el siguiente\
+            \ guardado.\n        try:\n            archivo_temporal.replace(self.ruta_csv)\n\
+            \        except OSError:\n            pass\n\n    def work(self, input_items,\
+            \ output_items):\n        ber_vectors = input_items[0]\n        log_vectors\
+            \ = input_items[1]\n\n        if len(ber_vectors) == 0:\n            return\
+            \ 0\n\n        ahora = time.time()\n        if ahora - self.ultimo_guardado\
+            \ >= self.guardar_cada:\n            try:\n                self.guardar(ber_vectors[-1],\
+            \ log_vectors[-1])\n            except OSError as e:  # Ajuste Fase 4:\
+            \ nunca detener el flujograma\n                print('[e_BER_CSV] no se\
+            \ pudo guardar (se reintenta):', e)\n            self.ultimo_guardado\
+            \ = ahora\n\n        return len(ber_vectors)\n"
+        affinity: ''
+        alias: ''
+        comment: 'Guarda la curva en Fase4/curva_BER.csv
+
+            Cada corrida lo sobrescribe: renombrarlo al terminar (ascii / pn9)'
+        guardar_cada: '2.0'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        nombre_archivo: '"curva_BER.csv"'
+    states:
+        _io_cache: ('Guardar curva BER en CSV', 'blk', [('EbN0_min', '0.0'), ('EbN0_max',
+            '18.0'), ('EbN0_step', '1.0'), ('nombre_archivo', "'curva_BER.csv'"),
+            ('guardar_cada', '2.0')], [('0', 'float', 19), ('1', 'float', 19)], [],
+            '', ['EbN0_max', 'EbN0_min', 'EbN0_step', 'guardar_cada', 'nombre_archivo'])
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 3304
+        - 600.0
+        rotation: 0
+        state: enabled
+-   id: epy_block
+    name: e_BER_Curve
+    parameters:
+        EbN0_max: EbN0_max
+        EbN0_min: EbN0_min
+        EbN0_step: EbN0_step
+        _source_code: "\"\"\"\ne_BER_Curve\nAcumulador de curva BER para los sistemas\
+            \ de los estudiantes.\n\nEntrada 0 : bits transmitidos de referencia (byte\
+            \ 0/1).\nEntrada 1 : bits recuperados por el receptor (byte 0/1).\n\n\
+            Salida 0  : vector BER lineal.\nSalida 1  : vector log10(BER) para QT\
+            \ GUI Vector Sink.\n\nEl bloque usa exactamente el mismo barrido que e_EbN0_Sweep.\
+            \ Para cada punto:\n- ignora bits_guardia al comienzo del segmento;\n\
+            - compara bits_por_punto;\n- cuando el barrido vuelve a un punto, sigue\
+            \ acumulando estad\xEDsticas.\n\ndelay_bits retrasa internamente la referencia\
+            \ Tx para compensar el retardo\ndel receptor. Se ajusta primero en una\
+            \ condici\xF3n limpia hasta lograr BER\u22480.\n\nCuando todav\xEDa no\
+            \ se observa ning\xFAn error, la salida logar\xEDtmica utiliza\n3/N como\
+            \ cota superior aproximada para poder mostrar el punto sin afirmar\nque\
+            \ BER=0.\n\"\"\"\n\nimport numpy as np\nfrom collections import deque\n\
+            from gnuradio import gr\n\n\nclass blk(gr.decim_block):  # Ajuste Fase\
+            \ 4: compatibilidad GNU Radio 3.10\n    def __init__(self,\n         \
+            \        EbN0_min=0.0,\n                 EbN0_max=18.0,  # Ajuste Fase\
+            \ 4: GRC dimensiona los puertos con este valor (debe ser = EbN0_max)\n\
+            \                 EbN0_step=1.0,\n                 bits_por_punto=100000,\n\
+            \                 bits_guardia=1000,\n                 delay_bits=0,\n\
+            \                 update_every=1000,\n                 segmentos_arranque=3):\
+            \  # Ajuste Fase 4: descartar el arranque\n        self.EbN0_min = float(EbN0_min)\n\
+            \        self.EbN0_max = float(EbN0_max)\n        self.EbN0_step = float(EbN0_step)\n\
+            \        self.bits_por_punto = max(1, int(bits_por_punto))\n        self.bits_guardia\
+            \ = max(0, int(bits_guardia))\n        self.delay_bits = max(0, int(delay_bits))\n\
+            \        self.update_every = max(1, int(update_every))\n        # Ajuste\
+            \ Fase 4 (hardware): no contar los primeros segmentos de la PRIMERA\n\
+            \        # pasada (overflows al abrir la GUI y alineacion de la referencia).\
+            \ La\n        # asignacion de puntos no cambia; esos puntos se miden en\
+            \ pasadas siguientes.\n        self.segmentos_arranque = max(0, int(segmentos_arranque))\n\
+            \n        if self.EbN0_step <= 0:\n            raise ValueError(\"EbN0_step\
+            \ debe ser > 0\")\n        if self.EbN0_max < self.EbN0_min:\n       \
+            \     raise ValueError(\"EbN0_max debe ser >= EbN0_min\")\n\n        npts\
+            \ = int(round((self.EbN0_max-self.EbN0_min)/self.EbN0_step)) + 1\n   \
+            \     self.eb_axis = self.EbN0_min + self.EbN0_step*np.arange(npts, dtype=np.float64)\n\
+            \        self.N = len(self.eb_axis)\n        self.segment_bits = self.bits_guardia\
+            \ + self.bits_por_punto\n\n        # Ajuste Fase 4: compatibilidad GNU\
+            \ Radio 3.10\n        gr.decim_block.__init__(\n            self,\n  \
+            \          name='e_BER_Curve',\n            in_sig=[np.int8, np.int8],\n\
+            \            out_sig=[(np.float32, self.N), (np.float32, self.N)],\n \
+            \           decim=self.update_every\n        )\n\n        self.tx_fifo\
+            \ = deque([0]*self.delay_bits)\n        self.raw_items = 0\n        self.valid_bit_index\
+            \ = 0\n\n        self.count = np.zeros(self.N, dtype=np.int64)\n     \
+            \   self.errors = np.zeros(self.N, dtype=np.int64)\n\n    def _process(self,\
+            \ tx, rx):\n        for t, r in zip(tx, rx):\n            tb = int(t)\
+            \ & 1\n            rb = int(r) & 1\n\n            if self.delay_bits >\
+            \ 0:\n                self.tx_fifo.append(tb)\n                t_aligned\
+            \ = self.tx_fifo.popleft()\n                if self.raw_items < self.delay_bits:\n\
+            \                    self.raw_items += 1\n                    continue\n\
+            \            else:\n                t_aligned = tb\n\n            bit_index\
+            \ = self.valid_bit_index\n            segment_index = bit_index // self.segment_bits\n\
+            \            point_index = segment_index % self.N\n            pos = bit_index\
+            \ % self.segment_bits\n\n            # Dejar que filtros/sincronizadores\
+            \ se estabilicen despu\xE9s\n            # del cambio de nivel de ruido.\n\
+            \            if pos >= self.bits_guardia and segment_index >= self.segmentos_arranque:\n\
+            \                self.count[point_index] += 1\n                if t_aligned\
+            \ != rb:\n                    self.errors[point_index] += 1\n\n      \
+            \      self.valid_bit_index += 1\n            self.raw_items += 1\n\n\
+            \    def _vectors(self):\n        ber = np.zeros(self.N, dtype=np.float32)\n\
+            \        logber = np.zeros(self.N, dtype=np.float32)\n\n        for i\
+            \ in range(self.N):\n            n = int(self.count[i])\n            e\
+            \ = int(self.errors[i])\n\n            if n <= 0:\n                ber[i]\
+            \ = 0.0\n                logber[i] = 0.0\n            elif e > 0:\n  \
+            \              b = e/float(n)\n                ber[i] = b\n          \
+            \      logber[i] = np.log10(max(b, 1e-12))\n            else:\n      \
+            \          # BER observado = 0; para la gr\xE1fica usamos una cota superior.\n\
+            \                ber[i] = 0.0\n                upper = min(1.0, 3.0/float(n))\n\
+            \                logber[i] = np.log10(max(upper, 1e-12))\n\n        return\
+            \ ber, logber\n\n    def work(self, input_items, output_items):\n    \
+            \    tx = input_items[0]\n        rx = input_items[1]\n        out_ber\
+            \ = output_items[0]\n        out_log = output_items[1]\n\n        nout\
+            \ = len(out_ber)\n        D = self.update_every\n\n        for k in range(nout):\n\
+            \            a = k*D\n            b = min((k+1)*D, len(tx))\n        \
+            \    if a < b:\n                self._process(tx[a:b], rx[a:b])\n\n  \
+            \          ber, logber = self._vectors()\n            out_ber[k, :] =\
+            \ ber\n            out_log[k, :] = logber\n\n        return nout\n"
+        affinity: ''
+        alias: ''
+        bits_guardia: bits_guardia
+        bits_por_punto: bits_por_punto
+        comment: 'Entrada 0: bits Tx de referencia
+
+            Entrada 1: bits Rx (slicer)'
+        delay_bits: delay_bits
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        segmentos_arranque: '3'
+        update_every: update_every
+    states:
+        _io_cache: ('e_BER_Curve', 'blk', [('EbN0_min', '0.0'), ('EbN0_max', '18.0'),
+            ('EbN0_step', '1.0'), ('bits_por_punto', '100000'), ('bits_guardia', '1000'),
+            ('delay_bits', '0'), ('update_every', '1000'), ('segmentos_arranque',
+            '3')], [('0', 'byte', 1), ('1', 'byte', 1)], [('0', 'float', 19), ('1',
+            'float', 19)], '', ['EbN0_max', 'EbN0_min', 'EbN0_step', 'bits_guardia',
+            'bits_por_punto', 'delay_bits', 'segmentos_arranque', 'update_every'])
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2976
+        - 440.0
+        rotation: 0
+        state: enabled
+-   id: epy_block
+    name: e_EbN0_Sweep
+    parameters:
+        EbN0_max: EbN0_max
+        EbN0_min: EbN0_min
+        EbN0_step: EbN0_step
+        _source_code: "\"\"\"\ne_EbN0_Sweep\nInstrumento para caracterizaci\xF3n BER\
+            \ con un enlace SDR ya funcional.\n\nEntrada 0 : se\xF1al compleja I/Q\
+            \ recibida del SDR (preferiblemente DESPU\xC9S\n            de la adaptaci\xF3\
+            n radio_rate -> bb_rate).\nSalida 0  : la misma se\xF1al I/Q con AWGN\
+            \ adicional controlado.\nSalida 1  : valor instant\xE1neo de Eb/N0 [dB]\
+            \ usado en el barrido.\n\nEl bloque NO sustituye el USRP/HackRF ni el\
+            \ receptor. Se inserta entre\nla salida I/Q del SDR y la entrada del receptor\
+            \ digital.\n\nEl barrido se hace por segmentos contiguos. Cada punto se\
+            \ mantiene durante:\n    bits_guardia + bits_por_punto\n\nLa potencia\
+            \ de ruido artificial se calcula a partir de la potencia promedio\nmedida\
+            \ ANTES de agregar el ruido:\n\n    Eb = Ps / Rb\n    N0 = Eb / (Eb/N0)\n\
+            \    Pn = N0 * Fs\n\npor lo tanto:\n\n    Pn = Ps * Fs / (Rb * 10**(EbN0_dB/10))\n\
+            \nEl ruido complejo se genera con varianza total Pn.\n\"\"\"\n\nimport\
+            \ numpy as np\nfrom gnuradio import gr\n\n\nclass blk(gr.sync_block):\n\
+            \    def __init__(self,\n                 EbN0_min=0.0,\n            \
+            \     EbN0_max=14.0,\n                 EbN0_step=1.0,\n              \
+            \   samp_rate=256000.0,\n                 bit_rate=64000.0,\n        \
+            \         bits_por_punto=100000,\n                 bits_guardia=1000,\n\
+            \                 signal_power=0.0,\n                 seed=2026):\n  \
+            \      gr.sync_block.__init__(\n            self,\n            name='e_EbN0_Sweep',\n\
+            \            in_sig=[np.complex64],\n            out_sig=[np.complex64,\
+            \ np.float32]\n        )\n\n        self.EbN0_min = float(EbN0_min)\n\
+            \        self.EbN0_max = float(EbN0_max)\n        self.EbN0_step = float(EbN0_step)\n\
+            \        self.samp_rate = float(samp_rate)\n        self.bit_rate = float(bit_rate)\n\
+            \        self.bits_por_punto = max(1, int(bits_por_punto))\n        self.bits_guardia\
+            \ = max(0, int(bits_guardia))\n        self.signal_power_cfg = float(signal_power)\n\
+            \n        if self.EbN0_step <= 0:\n            raise ValueError(\"EbN0_step\
+            \ debe ser > 0\")\n        if self.samp_rate <= 0 or self.bit_rate <=\
+            \ 0:\n            raise ValueError(\"samp_rate y bit_rate deben ser >\
+            \ 0\")\n        if self.EbN0_max < self.EbN0_min:\n            raise ValueError(\"\
+            EbN0_max debe ser >= EbN0_min\")\n\n        npts = int(round((self.EbN0_max-self.EbN0_min)/self.EbN0_step))\
+            \ + 1\n        self.eb_axis = self.EbN0_min + self.EbN0_step*np.arange(npts,\
+            \ dtype=np.float64)\n        self.segment_bits = self.bits_guardia + self.bits_por_punto\n\
+            \n        self.sample_count = 0\n        self.power_sum = 0.0\n      \
+            \  self.power_count = 0\n        self.rng = np.random.default_rng(int(seed))\n\
+            \n    def _signal_power(self, x):\n        if self.signal_power_cfg >\
+            \ 0:\n            return self.signal_power_cfg\n\n        # Promedio acumulado\
+            \ de la se\xF1al recibida ANTES del ruido artificial.\n        self.power_sum\
+            \ += float(np.sum(np.abs(x.astype(np.complex128))**2))\n        self.power_count\
+            \ += len(x)\n        if self.power_count <= 0:\n            return 0.0\n\
+            \        return max(self.power_sum/self.power_count, 1e-20)\n\n    def\
+            \ work(self, input_items, output_items):\n        x = input_items[0]\n\
+            \        y = output_items[0]\n        eb_out = output_items[1]\n     \
+            \   n = len(x)\n        if n == 0:\n            return 0\n\n        Ps\
+            \ = self._signal_power(x)\n\n        # \xCDndice absoluto de muestra ->\
+            \ \xEDndice equivalente de bit.\n        s = self.sample_count + np.arange(n,\
+            \ dtype=np.float64)\n        bit_index = np.floor(s*self.bit_rate/self.samp_rate).astype(np.int64)\n\
+            \n        segment_index = bit_index // self.segment_bits\n        point_index\
+            \ = np.mod(segment_index, len(self.eb_axis))\n        ebn0_db = self.eb_axis[point_index]\n\
+            \        ebn0_lin = np.power(10.0, ebn0_db/10.0)\n\n        # Potencia\
+            \ total del ruido complejo por muestra.\n        noise_power = Ps*self.samp_rate/(self.bit_rate*ebn0_lin)\n\
+            \        sigma_iq = np.sqrt(np.maximum(noise_power, 0.0)/2.0)\n\n    \
+            \    noise = (\n            self.rng.standard_normal(n)*sigma_iq\n   \
+            \         + 1j*self.rng.standard_normal(n)*sigma_iq\n        ).astype(np.complex64)\n\
+            \n        y[:] = x + noise\n        eb_out[:] = ebn0_db.astype(np.float32)\n\
+            \n        self.sample_count += n\n        return n\n"
+        affinity: ''
+        alias: ''
+        bit_rate: Rb
+        bits_guardia: bits_guardia
+        bits_por_punto: bits_por_punto
+        comment: 'Instrumento: AWGN controlado (barrido de Eb/N0)'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        samp_rate: bb_rate
+        seed: '2026'
+        signal_power: '0.0'
+    states:
+        _io_cache: ('e_EbN0_Sweep', 'blk', [('EbN0_min', '0.0'), ('EbN0_max', '14.0'),
+            ('EbN0_step', '1.0'), ('samp_rate', '256000.0'), ('bit_rate', '64000.0'),
+            ('bits_por_punto', '100000'), ('bits_guardia', '1000'), ('signal_power',
+            '0.0'), ('seed', '2026')], [('0', 'complex', 1)], [('0', 'complex', 1),
+            ('1', 'float', 1)], '', ['EbN0_max', 'EbN0_min', 'EbN0_step', 'bit_rate',
+            'bits_guardia', 'bits_por_punto', 'samp_rate'])
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 720
+        - 360
+        rotation: 0
+        state: enabled
+-   id: epy_block
+    name: e_Ref_Alineada
+    parameters:
+        _source_code: "\"\"\"\ne_Ref_Alineada\nGenera la referencia Tx (la trama de\
+            \ telemetria repetida) ALINEADA con los bits\nrecuperados, para que e_BER_Curve\
+            \ trabaje con delay_bits = 0.\n\nSe usa porque el Tx y el Rx corren en\
+            \ computadores distintos: el desfase entre\nla trama recibida y una referencia\
+            \ local cambia en cada ejecucion, y la deriva\nde reloj puede desplazarlo\
+            \ durante la medicion.\n\nEntrada 0 : bits recuperados por el receptor\
+            \ (byte 0/1).\nSalida 0  : bit de referencia correspondiente a cada bit\
+            \ recibido (byte 0/1).\n\nMetodo: correlacion circular de los bits recibidos\
+            \ (+-1) con la trama conocida,\nacumulada hasta que el pico es estadisticamente\
+            \ claro (z >= z_min). Entonces se\nfija el desfase. Ya alineada, corrige\
+            \ cualquier salto (busqueda global; Ajuste\nFase 4) con la misma exigencia\
+            \ estadistica. max_salto ya no se usa. Funciona aun con BER alta: a menor\n\
+            Eb/N0 solo tarda mas en decidir. La referencia NO copia bits del receptor:\n\
+            siempre es la trama conocida, desplazada el desfase elegido.\n\"\"\"\n\
+            \nimport numpy as np\nfrom gnuradio import gr\n\n\nclass blk(gr.sync_block):\n\
+            \    def __init__(self, trama=(0, 1), z_min=10.0, max_salto=3, min_bits=2000,\
+            \ max_bits=20000):\n        gr.sync_block.__init__(\n            self,\n\
+            \            name='e_Ref_Alineada',\n            in_sig=[np.int8],\n \
+            \           out_sig=[np.int8]\n        )\n        self.trama = np.array(trama,\
+            \ dtype=np.int8) & 1\n        self.L = len(self.trama)\n        self.t_pm\
+            \ = 2.0 * self.trama - 1.0\n        self.T_fft = np.conj(np.fft.fft(self.t_pm))\n\
+            \        self.z_min = float(z_min)\n        self.max_salto = int(max_salto)\n\
+            \        self.min_bits = int(min_bits)\n        self.max_bits = int(max_bits)\n\
+            \n        self.n = 0                  # indice absoluto del proximo bit\
+            \ recibido\n        self.desfase = None         # d: ref[n] = trama[(n\
+            \ - d) % L]\n        self.acc = np.zeros(self.L)\n        self.acc_bits\
+            \ = 0\n        self.cambios = 0\n\n    def _decidir(self):\n        #\
+            \ c[d] = sum_n rx_pm[n] * t_pm[(n - d) % L]\n        c = np.real(np.fft.ifft(np.fft.fft(self.acc)\
+            \ * self.T_fft))\n        sigma = np.sqrt(self.acc_bits)  # desviacion\
+            \ de c[d] para un desfase incorrecto\n        if self.desfase is None:\n\
+            \            d = int(np.argmax(c))\n            if c[d] / sigma < self.z_min:\n\
+            \                return\n        else:\n            # Ajuste Fase 4 (hardware):\
+            \ realineacion GLOBAL. Un overflow del HackRF o un\n            # underrun\
+            \ del USRP puede saltar mas de +-max_salto bits; antes el bloque\n   \
+            \         # quedaba desalineado para siempre (BER ~0.4 con el texto llegando\
+            \ bien).\n            # Ahora se busca en todos los desfases, con la misma\
+            \ exigencia (z >= z_min).\n            d = int(np.argmax(c))\n       \
+            \     if d == self.desfase:\n                # Desfase actual confirmado:\
+            \ reiniciar la ventana para detectar\n                # rapido un salto\
+            \ futuro. Si aun no hay evidencia, seguir acumulando.\n              \
+            \  if c[d] / sigma >= self.z_min or self.acc_bits >= self.max_bits:\n\
+            \                    self.acc[:] = 0.0\n                    self.acc_bits\
+            \ = 0\n                return\n            if (c[d] - c[self.desfase])\
+            \ / sigma < self.z_min:\n                # Sin evidencia suficiente: seguir\
+            \ acumulando (hasta max_bits)\n                if self.acc_bits >= self.max_bits:\n\
+            \                    self.acc[:] = 0.0\n                    self.acc_bits\
+            \ = 0\n                return\n        z = c[d] / sigma\n        if d\
+            \ != self.desfase:\n            if self.desfase is not None:\n       \
+            \         self.cambios += 1\n                print('[e_Ref_Alineada] desfase\
+            \ corregido: %d -> %d bits (z = %.1f)'\n                      % (self.desfase,\
+            \ d, z))\n            else:\n                print('[e_Ref_Alineada] alineada:\
+            \ desfase = %d bits (z = %.1f, %d bits)'\n                      % (d,\
+            \ z, self.acc_bits))\n            self.desfase = d\n        self.acc[:]\
+            \ = 0.0\n        self.acc_bits = 0\n\n    def work(self, input_items,\
+            \ output_items):\n        rx = input_items[0]\n        out = output_items[0]\n\
+            \        m = len(rx)\n        idx = self.n + np.arange(m)\n\n        d\
+            \ = 0 if self.desfase is None else self.desfase\n        out[:] = self.trama[(idx\
+            \ - d) % self.L]\n\n        np.add.at(self.acc, idx % self.L, 2.0 * (rx\
+            \ & 1) - 1.0)\n        self.acc_bits += m\n        self.n += m\n     \
+            \   # Antes de alinearse se evalua seguido (cada 250 bits) para fijar\
+            \ el desfase\n        # dentro de los bits de guarda del primer punto;\
+            \ despues, cada min_bits.\n        if self.acc_bits >= (250 if self.desfase\
+            \ is None else self.min_bits):\n            self._decidir()\n        return\
+            \ m\n"
+        affinity: ''
+        alias: ''
+        comment: 'Referencia Tx (trama conocida) alineada automaticamente
+
+            con los bits recibidos (Tx y Rx en PCs distintos)'
+        max_bits: '20000'
+        max_salto: '3'
+        maxoutbuf: '0'
+        min_bits: '2000'
+        minoutbuf: '0'
+        trama: trama_bits
+        z_min: '10.0'
+    states:
+        _io_cache: ('e_Ref_Alineada', 'blk', [('trama', '(0, 1)'), ('z_min', '10.0'),
+            ('max_salto', '3'), ('min_bits', '2000'), ('max_bits', '20000')], [('0',
+            'byte', 1)], [('0', 'byte', 1)], '', ['max_bits', 'max_salto', 'min_bits',
+            'trama', 'z_min'])
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2624
+        - 488.0
+        rotation: 0
+        state: enabled
+-   id: epy_block
+    name: e_Texto_Rx
+    parameters:
+        _source_code: "\"\"\"\ne_Texto_Rx\nRama de verificacion visual: reconstruye\
+            \ el texto de telemetria a partir de\nlos bits recuperados. NO interviene\
+            \ en la medicion BER.\n\nEntrada 0 : bits recuperados por el receptor\
+            \ (byte 0/1, salida del Binary Slicer).\n\nBusca la palabra de sincronizacion\
+            \ (ultimos 16 bits del preambulo + SFD 0x904E),\ntoma los bits de la carga,\
+            \ quita el blanqueo PN9 si pn9 = 1, y compara el texto\ncon el mensaje\
+            \ esperado.\n\nMetodos para Function Probe:\n    texto()  -> ultimo texto\
+            \ recibido\n    estado() -> contador de tramas correctas / con error\n\
+            \"\"\"\n\nimport time\n\nimport numpy as np\nfrom gnuradio import gr\n\
+            \nSINCRONIA = 0x5555904E      # 0x5555 (fin del preambulo) + SFD 0x904E\n\
+            SINCRONIA_BITS = 32\nMASCARA = (1 << SINCRONIA_BITS) - 1\n\n\nclass blk(gr.sync_block):\n\
+            \    def __init__(self, mensaje=\"ID:S01\", pn9=0, max_errores_sincronia=2,\n\
+            \                 imprimir_cada=1.0):\n        gr.sync_block.__init__(\n\
+            \            self,\n            name='e_Texto_Rx',\n            in_sig=[np.int8],\n\
+            \            out_sig=None\n        )\n        self.mensaje = str(mensaje)\n\
+            \        self.pn9 = int(pn9)\n        self.max_errores_sincronia = int(max_errores_sincronia)\n\
+            \        self.imprimir_cada = float(imprimir_cada)\n\n        self.carga_esperada\
+            \ = self._bytes_a_bits(self.mensaje.encode('ascii', errors='replace'))\n\
+            \        if self.pn9:\n            self.carga_esperada = self._blanquear(self.carga_esperada)\n\
+            \        self.n_carga = len(self.carga_esperada)\n\n        self.registro\
+            \ = 0\n        self.capturando = False\n        self.carga = []\n\n  \
+            \      self.tramas_ok = 0\n        self.tramas_error = 0\n        self.ultimo_texto\
+            \ = '(esperando trama...)'\n        self.ultimo_errores = 0\n        self.ultima_impresion\
+            \ = 0.0\n\n    @staticmethod\n    def _bytes_a_bits(datos):\n        return\
+            \ [(b >> (7 - i)) & 1 for b in datos for i in range(8)]\n\n    @staticmethod\n\
+            \    def _blanquear(bits):\n        # PN9: x^9 + x^5 + 1, semilla 0x1FF\
+            \ (igual que trama_telemetria)\n        estado = 0x1FF\n        salida\
+            \ = []\n        for b in bits:\n            salida.append(b ^ (estado\
+            \ & 1))\n            nuevo = (estado ^ (estado >> 5)) & 1\n          \
+            \  estado = (estado >> 1) | (nuevo << 8)\n        return salida\n\n  \
+            \  @staticmethod\n    def _visible(datos):\n        return ''.join(chr(c)\
+            \ if 32 <= c < 127 else '?' for c in datos)\n\n    def _cerrar_trama(self):\n\
+            \        errores = sum(a != b for a, b in zip(self.carga, self.carga_esperada))\n\
+            \        bits = self._blanquear(self.carga) if self.pn9 else self.carga\n\
+            \        datos = bytes(\n            sum(bits[k + i] << (7 - i) for i\
+            \ in range(8))\n            for k in range(0, len(bits) - 7, 8)\n    \
+            \    )\n        self.ultimo_texto = self._visible(datos)\n        self.ultimo_errores\
+            \ = errores\n        if errores == 0:\n            self.tramas_ok += 1\n\
+            \        else:\n            self.tramas_error += 1\n\n        ahora =\
+            \ time.time()\n        if ahora - self.ultima_impresion >= self.imprimir_cada:\n\
+            \            self.ultima_impresion = ahora\n            print('[Rx] %s\
+            \ | %s' % (self.ultimo_texto, self.estado()))\n\n    def texto(self):\n\
+            \        return self.ultimo_texto\n\n    def estado(self):\n        total\
+            \ = self.tramas_ok + self.tramas_error\n        return 'Tramas OK: %d\
+            \ / %d | errores en la ultima: %d bits' % (\n            self.tramas_ok,\
+            \ total, self.ultimo_errores)\n\n    def work(self, input_items, output_items):\n\
+            \        for b in input_items[0]:\n            bit = int(b) & 1\n    \
+            \        if self.capturando:\n                self.carga.append(bit)\n\
+            \                if len(self.carga) == self.n_carga:\n               \
+            \     self._cerrar_trama()\n                    self.capturando = False\n\
+            \                    self.registro = 0\n                continue\n\n \
+            \           self.registro = ((self.registro << 1) | bit) & MASCARA\n \
+            \           if bin(self.registro ^ SINCRONIA).count('1') <= self.max_errores_sincronia:\n\
+            \                self.capturando = True\n                self.carga =\
+            \ []\n        return len(input_items[0])\n"
+        affinity: ''
+        alias: ''
+        comment: Verificacion visual del texto (no afecta la BER)
+        imprimir_cada: '1.0'
+        max_errores_sincronia: '2'
+        maxoutbuf: '0'
+        mensaje: mensaje
+        minoutbuf: '0'
+        pn9: pn9
+    states:
+        _io_cache: ('e_Texto_Rx', 'blk', [('mensaje', "'ID:S01'"), ('pn9', '0'), ('max_errores_sincronia',
+            '2'), ('imprimir_cada', '1.0')], [('0', 'byte', 1)], [], '', ['imprimir_cada',
+            'max_errores_sincronia', 'mensaje', 'pn9'])
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2992
+        - 668.0
+        rotation: 0
+        state: enabled
+-   id: qtgui_number_sink
+    name: ebn0_actual
+    parameters:
+        affinity: ''
+        alias: ''
+        autoscale: 'False'
+        avg: '0'
+        color1: ("black", "black")
+        color10: ("black", "black")
+        color2: ("black", "black")
+        color3: ("black", "black")
+        color4: ("black", "black")
+        color5: ("black", "black")
+        color6: ("black", "black")
+        color7: ("black", "black")
+        color8: ("black", "black")
+        color9: ("black", "black")
+        comment: ''
+        factor1: '1'
+        factor10: '1'
+        factor2: '1'
+        factor3: '1'
+        factor4: '1'
+        factor5: '1'
+        factor6: '1'
+        factor7: '1'
+        factor8: '1'
+        factor9: '1'
+        graph_type: qtgui.NUM_GRAPH_HORIZ
+        gui_hint: ''
+        label1: '"Eb/N0 aplicado"'
+        label10: ''
+        label2: ''
+        label3: ''
+        label4: ''
+        label5: ''
+        label6: ''
+        label7: ''
+        label8: ''
+        label9: ''
+        max: EbN0_max
+        min: EbN0_min
+        name: '"Punto actual del barrido"'
+        nconnections: '1'
+        type: float
+        unit1: '"dB"'
+        unit10: ''
+        unit2: ''
+        unit3: ''
+        unit4: ''
+        unit5: ''
+        unit6: ''
+        unit7: ''
+        unit8: ''
+        unit9: ''
+        update_time: '0.25'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1024
+        - 592.0
+        rotation: 0
+        state: enabled
+-   id: qtgui_eye_sink_x
+    name: eye_rx
+    parameters:
+        affinity: ''
+        alias: ''
+        alpha1: '1.0'
+        alpha10: '1.0'
+        alpha2: '1.0'
+        alpha3: '1.0'
+        alpha4: '1.0'
+        alpha5: '1.0'
+        alpha6: '1.0'
+        alpha7: '1.0'
+        alpha8: '1.0'
+        alpha9: '1.0'
+        autoscale: 'False'
+        axislabels: 'True'
+        color1: blue
+        color10: blue
+        color2: blue
+        color3: blue
+        color4: blue
+        color5: blue
+        color6: blue
+        color7: blue
+        color8: blue
+        color9: blue
+        comment: Ojo a la salida del integrador (maxima apertura al final de cada
+            simbolo)
+        ctrlpanel: 'False'
+        entags: 'True'
+        grid: 'False'
+        gui_hint: ''
+        label1: Salida filtrada
+        label10: Signal 10
+        label2: Signal 2
+        label3: Signal 3
+        label4: Signal 4
+        label5: Signal 5
+        label6: Signal 6
+        label7: Signal 7
+        label8: Signal 8
+        label9: Signal 9
+        legend: 'True'
+        marker1: '-1'
+        marker10: '-1'
+        marker2: '-1'
+        marker3: '-1'
+        marker4: '-1'
+        marker5: '-1'
+        marker6: '-1'
+        marker7: '-1'
+        marker8: '-1'
+        marker9: '-1'
+        nconnections: '1'
+        samp_per_symbol: sps
+        size: '2000'
+        srate: samp_rate
+        style1: '1'
+        style10: '1'
+        style2: '1'
+        style3: '1'
+        style4: '1'
+        style5: '1'
+        style6: '1'
+        style7: '1'
+        style8: '1'
+        style9: '1'
+        tr_chan: '0'
+        tr_delay: '0'
+        tr_level: '0.0'
+        tr_mode: qtgui.TRIG_MODE_FREE
+        tr_slope: qtgui.TRIG_SLOPE_POS
+        tr_tag: '""'
+        type: float
+        update_time: '0.10'
+        width1: '1'
+        width10: '1'
+        width2: '1'
+        width3: '1'
+        width4: '1'
+        width5: '1'
+        width6: '1'
+        width7: '1'
+        width8: '1'
+        width9: '1'
+        ylabel: Amplitud
+        ymax: '2'
+        ymin: '-2'
+        yunit: '""'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2184
+        - 516.0
+        rotation: 0
+        state: enabled
+-   id: qtgui_time_sink_x
+    name: freq_inst
+    parameters:
+        affinity: ''
+        alias: ''
+        alpha1: '1.0'
+        alpha10: '1.0'
+        alpha2: '1.0'
+        alpha3: '1.0'
+        alpha4: '1.0'
+        alpha5: '1.0'
+        alpha6: '1.0'
+        alpha7: '1.0'
+        alpha8: '1.0'
+        alpha9: '1.0'
+        autoscale: 'False'
+        axislabels: 'True'
+        color1: blue
+        color10: dark blue
+        color2: red
+        color3: green
+        color4: black
+        color5: cyan
+        color6: magenta
+        color7: yellow
+        color8: dark red
+        color9: dark green
+        comment: ''
+        ctrlpanel: 'False'
+        entags: 'True'
+        grid: 'True'
+        gui_hint: ''
+        label1: Demodulada
+        label10: Signal 10
+        label2: Signal 2
+        label3: Signal 3
+        label4: Signal 4
+        label5: Signal 5
+        label6: Signal 6
+        label7: Signal 7
+        label8: Signal 8
+        label9: Signal 9
+        legend: 'True'
+        marker1: '-1'
+        marker10: '-1'
+        marker2: '-1'
+        marker3: '-1'
+        marker4: '-1'
+        marker5: '-1'
+        marker6: '-1'
+        marker7: '-1'
+        marker8: '-1'
+        marker9: '-1'
+        name: '"Frecuencia instantanea filtrada"'
+        nconnections: '1'
+        size: '2000'
+        srate: samp_rate
+        stemplot: 'False'
+        style1: '1'
+        style10: '1'
+        style2: '1'
+        style3: '1'
+        style4: '1'
+        style5: '1'
+        style6: '1'
+        style7: '1'
+        style8: '1'
+        style9: '1'
+        tr_chan: '0'
+        tr_delay: '0'
+        tr_level: '0.0'
+        tr_mode: qtgui.TRIG_MODE_FREE
+        tr_slope: qtgui.TRIG_SLOPE_POS
+        tr_tag: '""'
+        type: float
+        update_time: '0.10'
+        width1: '1'
+        width10: '1'
+        width2: '1'
+        width3: '1'
+        width4: '1'
+        width5: '1'
+        width6: '1'
+        width7: '1'
+        width8: '1'
+        width9: '1'
+        ylabel: Amplitud
+        ymax: '2'
+        ymin: '-2'
+        yunit: '""'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1912
+        - 540.0
+        rotation: 0
+        state: enabled
+-   id: analog_quadrature_demod_cf
+    name: fsk_demod
+    parameters:
+        affinity: ''
+        alias: ''
+        comment: 'Frecuencia instantanea normalizada
+
+            (+1 = bit 1, -1 = bit 0)'
+        gain: samp_rate/(2*math.pi*fsk_deviation)
+        maxoutbuf: '0'
+        minoutbuf: '0'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1376
+        - 400.0
+        rotation: 0
+        state: enabled
+-   id: osmosdr_source
+    name: hackrf_source
+    parameters:
+        affinity: ''
+        alias: ''
+        ant0: ''
+        ant1: ''
+        ant10: ''
+        ant11: ''
+        ant12: ''
+        ant13: ''
+        ant14: ''
+        ant15: ''
+        ant16: ''
+        ant17: ''
+        ant18: ''
+        ant19: ''
+        ant2: ''
+        ant20: ''
+        ant21: ''
+        ant22: ''
+        ant23: ''
+        ant24: ''
+        ant25: ''
+        ant26: ''
+        ant27: ''
+        ant28: ''
+        ant29: ''
+        ant3: ''
+        ant30: ''
+        ant31: ''
+        ant4: ''
+        ant5: ''
+        ant6: ''
+        ant7: ''
+        ant8: ''
+        ant9: ''
+        args: '"hackrf=0"'
+        bb_gain0: vga_gain
+        bb_gain1: '20'
+        bb_gain10: '20'
+        bb_gain11: '20'
+        bb_gain12: '20'
+        bb_gain13: '20'
+        bb_gain14: '20'
+        bb_gain15: '20'
+        bb_gain16: '20'
+        bb_gain17: '20'
+        bb_gain18: '20'
+        bb_gain19: '20'
+        bb_gain2: '20'
+        bb_gain20: '20'
+        bb_gain21: '20'
+        bb_gain22: '20'
+        bb_gain23: '20'
+        bb_gain24: '20'
+        bb_gain25: '20'
+        bb_gain26: '20'
+        bb_gain27: '20'
+        bb_gain28: '20'
+        bb_gain29: '20'
+        bb_gain3: '20'
+        bb_gain30: '20'
+        bb_gain31: '20'
+        bb_gain4: '20'
+        bb_gain5: '20'
+        bb_gain6: '20'
+        bb_gain7: '20'
+        bb_gain8: '20'
+        bb_gain9: '20'
+        bw0: '0'
+        bw1: '0'
+        bw10: '0'
+        bw11: '0'
+        bw12: '0'
+        bw13: '0'
+        bw14: '0'
+        bw15: '0'
+        bw16: '0'
+        bw17: '0'
+        bw18: '0'
+        bw19: '0'
+        bw2: '0'
+        bw20: '0'
+        bw21: '0'
+        bw22: '0'
+        bw23: '0'
+        bw24: '0'
+        bw25: '0'
+        bw26: '0'
+        bw27: '0'
+        bw28: '0'
+        bw29: '0'
+        bw3: '0'
+        bw30: '0'
+        bw31: '0'
+        bw4: '0'
+        bw5: '0'
+        bw6: '0'
+        bw7: '0'
+        bw8: '0'
+        bw9: '0'
+        clock_source0: ''
+        clock_source1: ''
+        clock_source2: ''
+        clock_source3: ''
+        clock_source4: ''
+        clock_source5: ''
+        clock_source6: ''
+        clock_source7: ''
+        comment: 'HackRF: RF Gain = amplificador (0 o 14 dB),
+
+            IF Gain = LNA, BB Gain = VGA'
+        corr0: '0'
+        corr1: '0'
+        corr10: '0'
+        corr11: '0'
+        corr12: '0'
+        corr13: '0'
+        corr14: '0'
+        corr15: '0'
+        corr16: '0'
+        corr17: '0'
+        corr18: '0'
+        corr19: '0'
+        corr2: '0'
+        corr20: '0'
+        corr21: '0'
+        corr22: '0'
+        corr23: '0'
+        corr24: '0'
+        corr25: '0'
+        corr26: '0'
+        corr27: '0'
+        corr28: '0'
+        corr29: '0'
+        corr3: '0'
+        corr30: '0'
+        corr31: '0'
+        corr4: '0'
+        corr5: '0'
+        corr6: '0'
+        corr7: '0'
+        corr8: '0'
+        corr9: '0'
+        dc_offset_mode0: '0'
+        dc_offset_mode1: '0'
+        dc_offset_mode10: '0'
+        dc_offset_mode11: '0'
+        dc_offset_mode12: '0'
+        dc_offset_mode13: '0'
+        dc_offset_mode14: '0'
+        dc_offset_mode15: '0'
+        dc_offset_mode16: '0'
+        dc_offset_mode17: '0'
+        dc_offset_mode18: '0'
+        dc_offset_mode19: '0'
+        dc_offset_mode2: '0'
+        dc_offset_mode20: '0'
+        dc_offset_mode21: '0'
+        dc_offset_mode22: '0'
+        dc_offset_mode23: '0'
+        dc_offset_mode24: '0'
+        dc_offset_mode25: '0'
+        dc_offset_mode26: '0'
+        dc_offset_mode27: '0'
+        dc_offset_mode28: '0'
+        dc_offset_mode29: '0'
+        dc_offset_mode3: '0'
+        dc_offset_mode30: '0'
+        dc_offset_mode31: '0'
+        dc_offset_mode4: '0'
+        dc_offset_mode5: '0'
+        dc_offset_mode6: '0'
+        dc_offset_mode7: '0'
+        dc_offset_mode8: '0'
+        dc_offset_mode9: '0'
+        freq0: fc - lo_offset
+        freq1: 100e6
+        freq10: 100e6
+        freq11: 100e6
+        freq12: 100e6
+        freq13: 100e6
+        freq14: 100e6
+        freq15: 100e6
+        freq16: 100e6
+        freq17: 100e6
+        freq18: 100e6
+        freq19: 100e6
+        freq2: 100e6
+        freq20: 100e6
+        freq21: 100e6
+        freq22: 100e6
+        freq23: 100e6
+        freq24: 100e6
+        freq25: 100e6
+        freq26: 100e6
+        freq27: 100e6
+        freq28: 100e6
+        freq29: 100e6
+        freq3: 100e6
+        freq30: 100e6
+        freq31: 100e6
+        freq4: 100e6
+        freq5: 100e6
+        freq6: 100e6
+        freq7: 100e6
+        freq8: 100e6
+        freq9: 100e6
+        gain0: '0'
+        gain1: '10'
+        gain10: '10'
+        gain11: '10'
+        gain12: '10'
+        gain13: '10'
+        gain14: '10'
+        gain15: '10'
+        gain16: '10'
+        gain17: '10'
+        gain18: '10'
+        gain19: '10'
+        gain2: '10'
+        gain20: '10'
+        gain21: '10'
+        gain22: '10'
+        gain23: '10'
+        gain24: '10'
+        gain25: '10'
+        gain26: '10'
+        gain27: '10'
+        gain28: '10'
+        gain29: '10'
+        gain3: '10'
+        gain30: '10'
+        gain31: '10'
+        gain4: '10'
+        gain5: '10'
+        gain6: '10'
+        gain7: '10'
+        gain8: '10'
+        gain9: '10'
+        gain_mode0: 'False'
+        gain_mode1: 'False'
+        gain_mode10: 'False'
+        gain_mode11: 'False'
+        gain_mode12: 'False'
+        gain_mode13: 'False'
+        gain_mode14: 'False'
+        gain_mode15: 'False'
+        gain_mode16: 'False'
+        gain_mode17: 'False'
+        gain_mode18: 'False'
+        gain_mode19: 'False'
+        gain_mode2: 'False'
+        gain_mode20: 'False'
+        gain_mode21: 'False'
+        gain_mode22: 'False'
+        gain_mode23: 'False'
+        gain_mode24: 'False'
+        gain_mode25: 'False'
+        gain_mode26: 'False'
+        gain_mode27: 'False'
+        gain_mode28: 'False'
+        gain_mode29: 'False'
+        gain_mode3: 'False'
+        gain_mode30: 'False'
+        gain_mode31: 'False'
+        gain_mode4: 'False'
+        gain_mode5: 'False'
+        gain_mode6: 'False'
+        gain_mode7: 'False'
+        gain_mode8: 'False'
+        gain_mode9: 'False'
+        if_gain0: lna_gain
+        if_gain1: '20'
+        if_gain10: '20'
+        if_gain11: '20'
+        if_gain12: '20'
+        if_gain13: '20'
+        if_gain14: '20'
+        if_gain15: '20'
+        if_gain16: '20'
+        if_gain17: '20'
+        if_gain18: '20'
+        if_gain19: '20'
+        if_gain2: '20'
+        if_gain20: '20'
+        if_gain21: '20'
+        if_gain22: '20'
+        if_gain23: '20'
+        if_gain24: '20'
+        if_gain25: '20'
+        if_gain26: '20'
+        if_gain27: '20'
+        if_gain28: '20'
+        if_gain29: '20'
+        if_gain3: '20'
+        if_gain30: '20'
+        if_gain31: '20'
+        if_gain4: '20'
+        if_gain5: '20'
+        if_gain6: '20'
+        if_gain7: '20'
+        if_gain8: '20'
+        if_gain9: '20'
+        iq_balance_mode0: '0'
+        iq_balance_mode1: '0'
+        iq_balance_mode10: '0'
+        iq_balance_mode11: '0'
+        iq_balance_mode12: '0'
+        iq_balance_mode13: '0'
+        iq_balance_mode14: '0'
+        iq_balance_mode15: '0'
+        iq_balance_mode16: '0'
+        iq_balance_mode17: '0'
+        iq_balance_mode18: '0'
+        iq_balance_mode19: '0'
+        iq_balance_mode2: '0'
+        iq_balance_mode20: '0'
+        iq_balance_mode21: '0'
+        iq_balance_mode22: '0'
+        iq_balance_mode23: '0'
+        iq_balance_mode24: '0'
+        iq_balance_mode25: '0'
+        iq_balance_mode26: '0'
+        iq_balance_mode27: '0'
+        iq_balance_mode28: '0'
+        iq_balance_mode29: '0'
+        iq_balance_mode3: '0'
+        iq_balance_mode30: '0'
+        iq_balance_mode31: '0'
+        iq_balance_mode4: '0'
+        iq_balance_mode5: '0'
+        iq_balance_mode6: '0'
+        iq_balance_mode7: '0'
+        iq_balance_mode8: '0'
+        iq_balance_mode9: '0'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        nchan: '1'
+        num_mboards: '1'
+        sample_rate: hackrf_rate
+        sync: none
+        time_source0: ''
+        time_source1: ''
+        time_source2: ''
+        time_source3: ''
+        time_source4: ''
+        time_source5: ''
+        time_source6: ''
+        time_source7: ''
+        type: fc32
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 72
+        - 352.0
+        rotation: 0
+        state: enabled
+-   id: import
+    name: import_0
+    parameters:
+        alias: ''
+        comment: ''
+        imports: import math
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1272
+        - 16.0
+        rotation: 0
+        state: enabled
+-   id: qtgui_const_sink_x
+    name: iq_const
+    parameters:
+        affinity: ''
+        alias: ''
+        alpha1: '1.0'
+        alpha10: '1.0'
+        alpha2: '1.0'
+        alpha3: '1.0'
+        alpha4: '1.0'
+        alpha5: '1.0'
+        alpha6: '1.0'
+        alpha7: '1.0'
+        alpha8: '1.0'
+        alpha9: '1.0'
+        autoscale: 'True'
+        axislabels: 'True'
+        color1: '"blue"'
+        color10: '"dark blue"'
+        color2: '"red"'
+        color3: '"green"'
+        color4: '"black"'
+        color5: '"cyan"'
+        color6: '"magenta"'
+        color7: '"yellow"'
+        color8: '"dark red"'
+        color9: '"dark green"'
+        comment: 'Envolvente constante: circulo; el ruido engrosa el anillo'
+        grid: 'True'
+        gui_hint: ''
+        label1: I-Q
+        label10: ''
+        label2: ''
+        label3: ''
+        label4: ''
+        label5: ''
+        label6: ''
+        label7: ''
+        label8: ''
+        label9: ''
+        legend: 'True'
+        marker1: '0'
+        marker10: '0'
+        marker2: '0'
+        marker3: '0'
+        marker4: '0'
+        marker5: '0'
+        marker6: '0'
+        marker7: '0'
+        marker8: '0'
+        marker9: '0'
+        name: "\"Plano I-Q de la se\xF1al filtrada (FSK = c\xEDrculo)\""
+        nconnections: '1'
+        size: '1024'
+        style1: '0'
+        style10: '0'
+        style2: '0'
+        style3: '0'
+        style4: '0'
+        style5: '0'
+        style6: '0'
+        style7: '0'
+        style8: '0'
+        style9: '0'
+        tr_chan: '0'
+        tr_level: '0.0'
+        tr_mode: qtgui.TRIG_MODE_FREE
+        tr_slope: qtgui.TRIG_SLOPE_POS
+        tr_tag: '""'
+        type: complex
+        update_time: '0.10'
+        width1: '1'
+        width10: '1'
+        width2: '1'
+        width3: '1'
+        width4: '1'
+        width5: '1'
+        width6: '1'
+        width7: '1'
+        width8: '1'
+        width9: '1'
+        xmax: '2'
+        xmin: '-2'
+        ymax: '2'
+        ymin: '-2'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1376
+        - 644.0
+        rotation: 0
+        state: enabled
+-   id: freq_xlating_fir_filter_xxx
+    name: rate_adapt
+    parameters:
+        affinity: ''
+        alias: ''
+        center_freq: lo_offset + freq_corr
+        comment: 'Adaptacion de tasa: centra la senal y baja de 8 MS/s a 1 MS/s
+
+            con un filtro ANCHO (300 kHz), para que el filtro de canal
+
+            quede despues del ruido de e_EbN0_Sweep'
+        decim: decim
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        samp_rate: hackrf_rate
+        taps: firdes.low_pass(1.0, hackrf_rate, 300e3, 100e3)
+        type: ccc
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 408
+        - 380
+        rotation: 0
+        state: enabled
+-   id: qtgui_freq_sink_x
+    name: raw_spectrum
+    parameters:
+        affinity: ''
+        alias: ''
+        alpha1: '1.0'
+        alpha10: '1.0'
+        alpha2: '1.0'
+        alpha3: '1.0'
+        alpha4: '1.0'
+        alpha5: '1.0'
+        alpha6: '1.0'
+        alpha7: '1.0'
+        alpha8: '1.0'
+        alpha9: '1.0'
+        autoscale: 'False'
+        average: '0.2'
+        axislabels: 'True'
+        bw: hackrf_rate
+        color1: '"blue"'
+        color10: '"dark blue"'
+        color2: '"red"'
+        color3: '"green"'
+        color4: '"black"'
+        color5: '"cyan"'
+        color6: '"magenta"'
+        color7: '"yellow"'
+        color8: '"dark red"'
+        color9: '"dark green"'
+        comment: ''
+        ctrlpanel: 'False'
+        fc: fc - lo_offset
+        fftsize: '4096'
+        freqhalf: 'True'
+        grid: 'True'
+        gui_hint: ''
+        label: Relative Gain
+        label1: HackRF
+        label10: ''''''
+        label2: ''''''
+        label3: ''''''
+        label4: ''''''
+        label5: ''''''
+        label6: ''''''
+        label7: ''''''
+        label8: ''''''
+        label9: ''''''
+        legend: 'True'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        name: '"Espectro recibido (HackRF, 8 MS/s)"'
+        nconnections: '1'
+        norm_window: 'False'
+        showports: 'False'
+        tr_chan: '0'
+        tr_level: '0.0'
+        tr_mode: qtgui.TRIG_MODE_FREE
+        tr_tag: '""'
+        type: complex
+        units: dB
+        update_time: '0.10'
+        width1: '1'
+        width10: '1'
+        width2: '1'
+        width3: '1'
+        width4: '1'
+        width5: '1'
+        width6: '1'
+        width7: '1'
+        width8: '1'
+        width9: '1'
+        wintype: window.WIN_BLACKMAN_hARRIS
+        ymax: '0'
+        ymin: '-120'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 408
+        - 596.0
+        rotation: 0
+        state: enabled
+-   id: digital_binary_slicer_fb
+    name: slicer
+    parameters:
+        affinity: ''
+        alias: ''
+        comment: ''
+        maxoutbuf: '0'
+        minoutbuf: '0'
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2560
+        - 328.0
+        rotation: 0
+        state: enabled
+-   id: digital_symbol_sync_xx
+    name: symbol_sync
+    parameters:
+        affinity: ''
+        alias: ''
+        comment: 'Recupera el reloj del Tx (sigue la deriva) y elige
+
+            el instante de muestreo. Reemplaza Delay + Keep 1 in N'
+        constellation: digital.constellation_bpsk().base()
+        damping: '1.0'
+        loop_bw: '0.005'
+        max_dev: '0.05'
+        maxoutbuf: '0'
+        minoutbuf: '0'
+        nfilters: '128'
+        osps: '1'
+        pfb_mf_taps: '[]'
+        resamp_type: digital.IR_MMSE_8TAP
+        sps: sps
+        ted_gain: '1.0'
+        ted_type: digital.TED_GARDNER
+        type: ff
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 2136
+        - 284.0
+        rotation: 0
+        state: enabled
+-   id: epy_module
+    name: trama_telemetria
+    parameters:
+        alias: ''
+        comment: Arma la trama. El mismo modulo va en el receptor.
+        source_code: "\"\"\"\ntrama_telemetria\nArma la trama de telemetria de la\
+            \ Fase 4 (formato tipo IEEE 802.15.4g SUN-FSK):\n\n    [preambulo 32 bits\
+            \ 0x55555555][SFD 16 bits 0x904E][carga: mensaje ASCII, MSB primero]\n\
+            \nSi pn9 = 1, la carga se blanquea con la secuencia PN9 (x^9 + x^5 + 1,\
+            \ semilla 0x1FF).\nEl preambulo y el SFD nunca se blanquean, para poder\
+            \ detectarlos en el receptor.\n\nEl mismo modulo va en el transmisor y\
+            \ en el receptor, para que ambos tengan\nexactamente la misma secuencia\
+            \ de referencia.\n\"\"\"\n\nPREAMBULO = 0x55555555\nPREAMBULO_BITS = 32\n\
+            SFD = 0x904E\nSFD_BITS = 16\n\n\ndef entero_a_bits(valor, n):\n    \"\"\
+            \"Entero -> lista de n bits, MSB primero.\"\"\"\n    return [(valor >>\
+            \ (n - 1 - i)) & 1 for i in range(n)]\n\n\ndef bytes_a_bits(datos):\n\
+            \    \"\"\"Bytes -> lista de bits, MSB primero en cada byte.\"\"\"\n \
+            \   return [(b >> (7 - i)) & 1 for b in datos for i in range(8)]\n\n\n\
+            def bits_a_bytes(bits):\n    \"\"\"Lista de bits (MSB primero) -> bytes.\
+            \ Ignora los bits sobrantes.\"\"\"\n    datos = bytearray()\n    for k\
+            \ in range(0, len(bits) - 7, 8):\n        b = 0\n        for bit in bits[k:k\
+            \ + 8]:\n            b = (b << 1) | (int(bit) & 1)\n        datos.append(b)\n\
+            \    return bytes(datos)\n\n\ndef secuencia_pn9(n):\n    \"\"\"n bits\
+            \ de la PN9 (x^9 + x^5 + 1) con semilla 0x1FF.\"\"\"\n    estado = 0x1FF\n\
+            \    salida = []\n    for _ in range(n):\n        salida.append(estado\
+            \ & 1)\n        nuevo = (estado ^ (estado >> 5)) & 1\n        estado =\
+            \ (estado >> 1) | (nuevo << 8)\n    return salida\n\n\ndef blanquear(bits):\n\
+            \    \"\"\"XOR con la PN9. Aplicarlo dos veces devuelve los bits originales.\"\
+            \"\"\n    return [b ^ p for b, p in zip(bits, secuencia_pn9(len(bits)))]\n\
+            \n\ndef carga_bits(mensaje, pn9=0):\n    \"\"\"Bits de la carga (mensaje\
+            \ ASCII), blanqueados si pn9 = 1.\"\"\"\n    bits = bytes_a_bits(str(mensaje).encode('ascii',\
+            \ errors='replace'))\n    return blanquear(bits) if int(pn9) else bits\n\
+            \n\ndef construir_trama(mensaje, pn9=0):\n    \"\"\"Trama completa como\
+            \ lista de bits 0/1.\"\"\"\n    return (entero_a_bits(PREAMBULO, PREAMBULO_BITS)\n\
+            \            + entero_a_bits(SFD, SFD_BITS)\n            + carga_bits(mensaje,\
+            \ pn9))\n\n\ndef decodificar_carga(bits, pn9=0):\n    \"\"\"Bits de carga\
+            \ recibidos -> texto (para el receptor).\"\"\"\n    bits = [int(b) & 1\
+            \ for b in bits]\n    if int(pn9):\n        bits = blanquear(bits)\n \
+            \   return bits_a_bytes(bits).decode('ascii', errors='replace')\n"
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 1728
+        - 120.0
+        rotation: 0
+        state: enabled
+connections:
+-   - bits_to_float
+    - '0'
+    - bits_rx
+    - '0'
+-   - channel_filter
+    - '0'
+    - channel_spectrum
+    - '0'
+-   - channel_filter
+    - '0'
+    - fsk_demod
+    - '0'
+-   - channel_filter
+    - '0'
+    - iq_const
+    - '0'
+-   - data_filter
+    - '0'
+    - eye_rx
+    - '0'
+-   - data_filter
+    - '0'
+    - freq_inst
+    - '0'
+-   - data_filter
+    - '0'
+    - symbol_sync
+    - '0'
+-   - dc_blocker
+    - '0'
+    - data_filter
+    - '0'
+-   - e_BER_Curve
+    - '0'
+    - e_BER_CSV
+    - '0'
+-   - e_BER_Curve
+    - '1'
+    - curva_ber
+    - '0'
+-   - e_BER_Curve
+    - '1'
+    - e_BER_CSV
+    - '1'
+-   - e_EbN0_Sweep
+    - '0'
+    - channel_filter
+    - '0'
+-   - e_EbN0_Sweep
+    - '1'
+    - ebn0_actual
+    - '0'
+-   - e_Ref_Alineada
+    - '0'
+    - e_BER_Curve
+    - '0'
+-   - fsk_demod
+    - '0'
+    - dc_blocker
+    - '0'
+-   - hackrf_source
+    - '0'
+    - rate_adapt
+    - '0'
+-   - hackrf_source
+    - '0'
+    - raw_spectrum
+    - '0'
+-   - rate_adapt
+    - '0'
+    - e_EbN0_Sweep
+    - '0'
+-   - slicer
+    - '0'
+    - bits_to_float
+    - '0'
+-   - slicer
+    - '0'
+    - e_BER_Curve
+    - '1'
+-   - slicer
+    - '0'
+    - e_Ref_Alineada
+    - '0'
+-   - slicer
+    - '0'
+    - e_Texto_Rx
+    - '0'
+-   - symbol_sync
+    - '0'
+    - slicer
+    - '0'
+metadata:
+    file_format: 1
+    grc_version: 3.10.12.0
+options:
+    parameters:
+        author: ''
+        catch_exceptions: 'True'
+        category: '[GRC Hier Blocks]'
+        cmake_opt: ''
+        comment: 'Receptor FSK con HackRF One (Tx: USRP 2920)'
+        copyright: ''
+        description: Receptor FSK con instrumentacion BER (e_EbN0_Sweep + e_BER_Curve)
+            y verificacion del texto de telemetria
+        gen_cmake: 'On'
+        gen_linking: dynamic
+        generate_options: qt_gui
+        hier_block_src_path: '.:'
+        id: Receptor_FSK_HackRF_Fase4
+        max_nouts: '0'
+        output_language: python
+        placement: (0,0)
+        qt_qss_theme: ''
+        realtime_scheduling: ''
+        run: 'True'
+        run_command: '{python} -u {filename}'
+        run_options: prompt
+        sizing_mode: fixed
+        thread_safe_setters: ''
+        title: 'Receptor FSK - HackRF One (Fase 4: medicion BER vs Eb/N0)'
+        window_size: (1400,900)
+    states:
+        bus_sink: false
+        bus_source: false
+        bus_structure: null
+        coordinate:
+        - 32
+        - 4.0
+        rotation: 0
+        state: enabled
